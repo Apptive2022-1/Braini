@@ -17,6 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.layoutpractice.R
+import com.example.layoutpractice.UIConstant
 
 @Composable
 fun LoginScreen() {
@@ -39,7 +40,7 @@ fun LoginScreen() {
             Spacer(modifier = Modifier.height(30.dp))
 
             Button(
-                modifier = Modifier.width(250.dp),
+                modifier = Modifier.width(UIConstant.BUTTON_WIDTH_LONG),
                 onClick = { /*TODO*/ }) {
                 Image(painter = painterResource(id = R.drawable.random_image_01),
                       contentDescription = null,
@@ -53,7 +54,7 @@ fun LoginScreen() {
             Spacer(modifier = Modifier.height(10.dp))
             
             Button(
-                modifier = Modifier.width(250.dp),
+                modifier = Modifier.width(UIConstant.BUTTON_WIDTH_LONG),
                 onClick = { /*TODO*/ }) {
                 Image(painter = painterResource(id = R.drawable.random_image_02),
                     contentDescription = null,
@@ -67,7 +68,7 @@ fun LoginScreen() {
             Spacer(modifier = Modifier.height(10.dp))
 
             Button(
-                modifier = Modifier.width(250.dp),
+                modifier = Modifier.width(UIConstant.BUTTON_WIDTH_LONG),
                 onClick = { /*TODO*/ }) {
                 Image(painter = painterResource(id = R.drawable.random_image_03),
                     contentDescription = null,

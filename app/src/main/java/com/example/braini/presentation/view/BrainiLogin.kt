@@ -35,7 +35,9 @@ fun BLogin(){
         Box(modifier = Modifier
             .fillMaxSize()
             .padding(top = 50.dp)){
-            Box(modifier =Modifier.fillMaxSize()){
+            Box(modifier =Modifier
+                .fillMaxSize()
+                .padding(horizontal = 200.dp)){
                 Image(painter = painterResource(id = R.drawable.small_cloud), contentDescription = null)
             }
             Box(modifier = Modifier.fillMaxSize()){

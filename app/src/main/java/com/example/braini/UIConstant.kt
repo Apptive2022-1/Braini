@@ -1,4 +1,4 @@
-package com.example.layoutpractice
+package com.apptive.braini
 
 import androidx.compose.ui.unit.dp
 

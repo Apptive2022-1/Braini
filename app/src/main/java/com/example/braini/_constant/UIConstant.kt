@@ -1,4 +1,4 @@
-package com.apptive.braini
+package com.example.braini._constant
 
 import androidx.compose.ui.unit.dp
 

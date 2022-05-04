@@ -1,4 +1,4 @@
-package com.example.layoutpractice.view
+package com.apptive.braini.view
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -16,8 +16,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.layoutpractice.R
-import com.example.layoutpractice.UIConstant
+import com.apptive.braini.R
+import com.apptive.braini.UIConstant
 
 @Composable
 fun LoginScreen() {

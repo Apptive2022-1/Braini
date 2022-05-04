@@ -1,4 +1,4 @@
-package com.example.layoutpractice.view
+package com.apptive.braini.view
 
 import android.window.SplashScreen
 import androidx.compose.foundation.Image
@@ -16,7 +16,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.layoutpractice.R
+import com.apptive.braini.R
 
 @Composable
 fun SplashScreen(){

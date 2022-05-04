@@ -1,4 +1,4 @@
-package com.example.layoutpractice.ui.theme
+package com.apptive.braini.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle

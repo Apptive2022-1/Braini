@@ -1,4 +1,4 @@
-package com.example.layoutpractice.ui.theme
+package com.apptive.braini.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme

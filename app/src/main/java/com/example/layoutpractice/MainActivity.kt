@@ -10,10 +10,10 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.example.layoutpractice.ui.theme.LayoutPracticeTheme
-import com.example.layoutpractice.view.BLogin
-import com.example.layoutpractice.view.LoginScreen
-import com.example.layoutpractice.view.SplashScreen
+import com.apptive.braini.ui.theme.LayoutPracticeTheme
+import com.apptive.braini.view.BLogin
+import com.apptive.braini.view.LoginScreen
+import com.apptive.braini.view.SplashScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

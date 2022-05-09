@@ -20,89 +20,14 @@ import com.example.braini.Side
 
 @Composable
 fun RoomSelectScreen() {
-    RoomSelectContent {
-        Text(
-            text = "방 옵션 선택",
-            color = Color.Black,
-            fontSize = 28.sp,
-            fontWeight = FontWeight.SemiBold
-        )
-
-        Spacer(modifier = Modifier.height(78.dp))
-
-        Text(
-            text = "프로젝트명",
-            color = Color.Black,
-            fontSize = 16.sp,
-            fontWeight = FontWeight.SemiBold,
-            modifier = Modifier.padding(end = 260.dp)
-        )
-
-        BrainiButton()
-
-        Spacer(modifier = Modifier.height(60.dp))
-
-        BrainiDividedButton(
-            side = Side.RIGHT,
-            leftText = "참여인원",
-            rightText = "6"
-        )
-
-        Spacer(modifier = Modifier.height(37.dp))
-
-        Text(
-            text = "시작 날짜",
-            color = Color.Black,
-            fontSize = 16.sp,
-            fontWeight = FontWeight.SemiBold,
-            modifier = Modifier.padding(end = 260.dp)
-        )
-
-        BrainiButton()
-
-        Spacer(modifier = Modifier.height(37.dp))
-
-        Text(
-            text = "시작 시간",
-            color = Color.Black,
-            fontSize = 16.sp,
-            fontWeight = FontWeight.SemiBold,
-            modifier = Modifier.padding(end = 260.dp)
-        )
-
-        BrainiButton()
-
-        Spacer(modifier = Modifier.height(37.dp))
-
-        Text(
-            text = "음성 통화",
-            color = Color.Black,
-            fontSize = 16.sp,
-            fontWeight = FontWeight.SemiBold,
-            modifier = Modifier.padding(end = 260.dp)
-        )
-
-        BrainiDividedButton(
-            side = Side.LEFT,
-            leftText = "사용 O",
-            rightText = "사용 X"
-        )
-
-        Spacer(modifier = Modifier.height(37.dp))
-
-        Text(
-            text = "공개 여부",
-            color = Color.Black,
-            fontSize = 16.sp,
-            fontWeight = FontWeight.SemiBold,
-            modifier = Modifier.padding(end = 260.dp)
-        )
-
-        BrainiDividedButton(
-            side = Side.LEFT,
-            leftText = "사용 O",
-            rightText = "사용 X"
-        )
+    RoomSelectContent(){
+        Title()
+        RoomName()
+        Number()
+        Date()
+        Time()
+        Calling()
+        Lock()
     }
 }
 
@@ -191,7 +116,109 @@ private fun BrainiDividedButton(
         }
     }
 }
+@Composable
+private fun Title(){
+        Text(
+            text = "방 옵션 선택",
+            color = Color.Black,
+            fontSize = 28.sp,
+            fontWeight = FontWeight.SemiBold
+        )
 
+        Spacer(modifier = Modifier.height(78.dp))
+    }
+
+@Composable
+private fun RoomName(){
+    Text(
+        text = "프로젝트명",
+        color = Color.Black,
+        fontSize = 16.sp,
+        fontWeight = FontWeight.SemiBold,
+        modifier = Modifier.padding(end = 260.dp)
+    )
+
+    BrainiButton()
+
+    Spacer(modifier = Modifier.height(60.dp))
+}
+
+@Composable
+private fun Number() {
+    BrainiDividedButton(
+        side = Side.RIGHT,
+        leftText = "참여인원",
+        rightText = "6"
+    )
+
+    Spacer(modifier = Modifier.height(37.dp))
+}
+
+@Composable
+private fun Date(){
+    Text(
+        text = "시작 날짜",
+        color = Color.Black,
+        fontSize = 16.sp,
+        fontWeight = FontWeight.SemiBold,
+        modifier = Modifier.padding(end = 260.dp)
+    )
+
+    BrainiButton()
+
+    Spacer(modifier = Modifier.height(37.dp))
+}
+
+@Composable
+private fun Time(){
+    Text(
+        text = "시작 시간",
+        color = Color.Black,
+        fontSize = 16.sp,
+        fontWeight = FontWeight.SemiBold,
+        modifier = Modifier.padding(end = 260.dp)
+    )
+
+    BrainiButton()
+
+    Spacer(modifier = Modifier.height(37.dp))
+}
+
+@Composable
+private fun Calling(){
+    Text(
+        text = "음성 통화",
+        color = Color.Black,
+        fontSize = 16.sp,
+        fontWeight = FontWeight.SemiBold,
+        modifier = Modifier.padding(end = 260.dp)
+    )
+
+    BrainiDividedButton(
+        side = Side.LEFT,
+        leftText = "사용 O",
+        rightText = "사용 X"
+    )
+
+    Spacer(modifier = Modifier.height(37.dp))
+}
+
+@Composable
+private fun Lock(){
+    Text(
+        text = "공개 여부",
+        color = Color.Black,
+        fontSize = 16.sp,
+        fontWeight = FontWeight.SemiBold,
+        modifier = Modifier.padding(end = 260.dp)
+    )
+
+    BrainiDividedButton(
+        side = Side.LEFT,
+        leftText = "사용 O",
+        rightText = "사용 X"
+    )
+}
 
 @Preview(showSystemUi = true)
 @Composable

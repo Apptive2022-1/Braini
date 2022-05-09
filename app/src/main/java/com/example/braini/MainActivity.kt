@@ -6,8 +6,11 @@ import androidx.activity.compose.setContent
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
 import com.apptive.braini.ui.theme.LayoutPracticeTheme
-import com.apptive.braini.view.BLogin
+import com.apptive.braini.view.LoginScreen
+import com.example.braini.presentation.navigation.SetupNavGraph
+import com.example.braini.presentation.view.ModalBottomSheet
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,7 +18,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             LayoutPracticeTheme {
                 // A surface container using the 'background' color from the theme
-                BLogin()
+                val navController = rememberNavController()
+                SetupNavGraph(navController = navController)
+                ModalBottomSheet()
             }
         }
     }

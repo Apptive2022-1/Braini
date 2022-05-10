@@ -8,9 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.apptive.braini.ui.theme.LayoutPracticeTheme
-import com.apptive.braini.view.LoginScreen
 import com.example.braini.presentation.navigation.SetupNavGraph
-import com.example.braini.presentation.view.ModalBottomSheet
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -19,10 +17,8 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             LayoutPracticeTheme {
-                // A surface container using the 'background' color from the theme
                 val navController = rememberNavController()
                 SetupNavGraph(navController = navController)
-                ModalBottomSheet()
             }
         }
     }

@@ -15,7 +15,8 @@ import com.example.braini.presentation.view.AnimatedSplashScreen
 fun SetupNavGraph(navController: NavHostController){
     NavHost(
         navController =navController ,
-        startDestination = Screen.Splash.route){
+        startDestination = Screen.Splash.route
+    ){
         composable(route = Screen.Splash.route){
             AnimatedSplashScreen(navController)
         }

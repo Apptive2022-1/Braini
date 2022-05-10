@@ -11,7 +11,9 @@ import com.apptive.braini.ui.theme.LayoutPracticeTheme
 import com.apptive.braini.view.LoginScreen
 import com.example.braini.presentation.navigation.SetupNavGraph
 import com.example.braini.presentation.view.ModalBottomSheet
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

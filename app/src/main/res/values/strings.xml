@@ -2,4 +2,6 @@
     <string name="app_name">Braini</string>
     <string name="login_button">로 그 인</string>
     <string name="new_user_button">회 원 가 입</string>
+    <string name="client_id_android">340359310267-mlvj58fv4ucoqk8imoeu8hmc9do37u0u.apps.googleusercontent.com</string>
+    <string name="client_id_server">340359310267-mlvj58fv4ucoqk8imoeu8hmc9do37u0u.apps.googleusercontent.com</string>
 </resources>

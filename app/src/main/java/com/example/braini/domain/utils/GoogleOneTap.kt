@@ -19,10 +19,14 @@ import com.google.android.gms.auth.api.identity.BeginSignInResult
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.android.gms.tasks.OnSuccessListener
+import dagger.hilt.android.qualifiers.ActivityContext
+import dagger.hilt.android.scopes.ActivityScoped
+import javax.inject.Inject
 
-class GoogleOneTap(
-    // OAuth 결과 계정 정보를 받아오는 데에도 활용된다.
-    private val oneTapClient: SignInClient
+/** One Tap API 활용을 위한 클래스 */
+class GoogleOneTap @Inject constructor(
+    private val oneTapClient: SignInClient,
+    private val clientId: String
 ) {
     fun signOut() = oneTapClient.signOut()
 
@@ -43,10 +47,9 @@ class GoogleOneTap(
     }
 
     fun beginSignIn(
-        context: Context,
         launcher: IntentSenderLauncher
     ) {
-        val request = providesBeginSignIn(context)
+        val request = providesBeginSignIn()
 
         oneTapClient.beginSignIn(request)
             .addOnSuccessListener(onSuccessListener(launcher))
@@ -57,8 +60,8 @@ class GoogleOneTap(
     }
 
     /** 로그인 결과 반환할 정보를 설정한다. (ID Token 또는 Password Credential) */
-    private fun providesBeginSignIn(context: Context): BeginSignInRequest {
-        val idTokenOptions = providesIdTokenRequestOptions(context)
+    private fun providesBeginSignIn(): BeginSignInRequest {
+        val idTokenOptions = providesIdTokenRequestOptions()
 
         return BeginSignInRequest.builder()
             .setGoogleIdTokenRequestOptions(idTokenOptions)
@@ -67,9 +70,7 @@ class GoogleOneTap(
     }
 
     /** IdToken을 받고자 할 경우, 필요한 옵션 및 정보를 설정한다. */
-    private fun providesIdTokenRequestOptions(context: Context): GoogleIdTokenRequestOptions {
-        val clientId = context.getString(R.string.client_id_server)
-
+    private fun providesIdTokenRequestOptions(): GoogleIdTokenRequestOptions {
         return GoogleIdTokenRequestOptions.builder()
             .setSupported(true)
             // Your server's client ID, not your Android client ID

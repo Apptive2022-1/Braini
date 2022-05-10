@@ -32,7 +32,10 @@ class AccountStore @Inject constructor(@ApplicationContext context: Context){
             val name = storeMap[LOGGED_IN_USER_NAME] ?: Account.GUEST.name
             val token =  storeMap[LOGGED_IN_USER_TOKEN] ?: Account.GUEST.token
 
-            Account(id = id, email = email, name = name, token = token)
+            if (id == Account.GUEST.id)
+                Account.GUEST
+            else
+                Account(id = id, email = email, name = name, token = token)
         }
     }
 

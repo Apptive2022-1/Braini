@@ -13,6 +13,7 @@ import androidx.activity.result.IntentSenderRequest
 import com.apptive.braini.R
 import com.example.braini.domain.IntentSenderLauncher
 import com.example.braini.domain.log
+import com.example.braini.domain.model.Account
 import com.google.android.gms.auth.api.identity.BeginSignInRequest
 import com.google.android.gms.auth.api.identity.BeginSignInRequest.GoogleIdTokenRequestOptions
 import com.google.android.gms.auth.api.identity.BeginSignInResult
@@ -21,24 +22,32 @@ import com.google.android.gms.auth.api.identity.SignInClient
 import com.google.android.gms.tasks.OnSuccessListener
 import dagger.hilt.android.qualifiers.ActivityContext
 import dagger.hilt.android.scopes.ActivityScoped
+import dagger.hilt.android.scopes.ViewModelScoped
 import javax.inject.Inject
 
 /** One Tap API 활용을 위한 클래스 */
+@ViewModelScoped
 class GoogleOneTap @Inject constructor(
     private val oneTapClient: SignInClient,
-    private val clientId: String
+    private val clientId: String,
+    private val accountManager: AccountManager
 ) {
-    fun signOut() = oneTapClient.signOut()
+    fun signOut() {
+        oneTapClient.signOut()
+        accountManager.logout()
+    }
 
     fun onActicityResult(result: ActivityResult) {
         when (result.resultCode) {
             Activity.RESULT_OK -> {
                 val credential = oneTapClient.getSignInCredentialFromIntent(result.data)
-                val idToken = credential.googleIdToken
+                val token = credential.googleIdToken ?: ""
+                val id = token ?: ""
                 val email = credential.id
-                val name = credential.givenName
-                "One Tap Success!".log()
-                "Token: $idToken \nid: $email \n name: $name\n".log()
+                val name = credential.givenName ?: ""
+
+                val account = Account(id=id, token=token, email=email, name=name)
+                accountManager.login(account)
             }
             Activity.RESULT_CANCELED -> {
                 "One Tap Canceled!".log()

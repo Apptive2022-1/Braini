@@ -10,7 +10,7 @@ class Account(
     fun isGuest() : Boolean = (this == GUEST)
 
     override fun toString(): String {
-        return "User(token: $token, id: $id, email: $email, name: $name"
+        return "User(id: $id, email: $email, name: $name, token: $token"
     }
 
     override fun equals(other: Any?): Boolean {

@@ -1,5 +1,7 @@
 package com.apptive.braini.view
 
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -20,15 +22,25 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navOptions
 import com.apptive.braini.R
+import com.example.braini.presentation.navigation.Screen
+import com.example.braini.presentation.popAndNavigate
+import com.example.braini.presentation.viewmodel.interfaces.ILoginViewModel
+import com.example.braini.presentation.viewmodel.mock.LoginViewModelMock
 
 @Composable
-fun LoginScreen(){
+fun LoginScreen(
+    viewModel: ILoginViewModel = LoginViewModelMock(),
+    navController: NavController
+){
     LoginBackground {
         Header()
         Clouds()
         Description()
-        Buttons()
+        Buttons(viewModel = viewModel, navController = navController)
     }
 }
 
@@ -152,7 +164,10 @@ private fun ColumnScope.Description(){
 
 
 @Composable
-private fun ColumnScope.Buttons(){
+private fun ColumnScope.Buttons(
+    viewModel: ILoginViewModel,
+    navController: NavController
+){
     Box(
         modifier = Modifier.weight(1f)
     ){
@@ -162,8 +177,20 @@ private fun ColumnScope.Buttons(){
                 .padding(top = 50.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
+            val launcher = rememberLauncherForActivityResult(
+                contract = ActivityResultContracts.StartIntentSenderForResult(),
+                onResult = { result ->
+                    viewModel.googleResultListener(
+                        result = result,
+                        onSuccess = { navController.popAndNavigate(Screen.RoomSelect.route) }
+                    )
+                }
+            )
+
             Button(
-                onClick = { /*TODO*/ },
+                onClick = {
+                    viewModel.googleSignIn(launcher = launcher)
+                },
                 modifier = Modifier.width(320.dp),
                 colors = ButtonDefaults.buttonColors(Color.White),
                 shape = RoundedCornerShape(15.dp)
@@ -195,5 +222,6 @@ private fun ColumnScope.Buttons(){
 @Preview
 @Composable
 fun BPreview(){
-    LoginScreen()
+    val navController = rememberNavController()
+    LoginScreen(navController = navController)
 }

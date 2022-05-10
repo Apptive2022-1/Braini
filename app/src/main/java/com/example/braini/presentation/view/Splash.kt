@@ -12,27 +12,33 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.apptive.braini.R
 import com.example.braini.presentation.navigation.Screen
+import com.example.braini.presentation.viewmodel.interfaces.ILoginViewModel
+import com.example.braini.presentation.viewmodel.mock.LoginViewModelMock
 import kotlinx.coroutines.delay
 
 @Composable
-fun AnimatedSplashScreen(navController: NavHostController){
+fun SplashScreen(
+    viewModel: ILoginViewModel = LoginViewModelMock(),
+    navController: NavHostController
+){
     var startAnimation by remember { mutableStateOf(false) }
     val alphaAnim = animateFloatAsState(
         targetValue = if(startAnimation) 1f else 0f,
         animationSpec = tween(
             durationMillis = 3000
         )
-            )
+    )
 
     LaunchedEffect(key1 = true){
         startAnimation = true
         delay(4000)
         navController.popBackStack()
-        navController.navigate(Screen.Login.route)
+
+        if (viewModel.isLoggedIn()) navController.navigate(Screen.RoomSelect.route)
+        else                        navController.navigate(Screen.Login.route)
     }
 
     Splash(alpha = alphaAnim.value)

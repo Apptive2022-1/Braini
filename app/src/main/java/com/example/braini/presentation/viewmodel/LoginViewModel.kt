@@ -14,14 +14,13 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val accountManager: AccountManager,
     private val oneTap: GoogleOneTap
 ): ViewModel(), ILoginViewModel {
-    override fun onActivityResult(result: ActivityResult) {
+    override fun googleResultListener(result: ActivityResult) {
         oneTap.onActicityResult(result)
     }
 
-    override fun beginSignIn(launcher: IntentSenderLauncher) {
+    override fun googleSignIn(launcher: IntentSenderLauncher) {
         oneTap.beginSignIn(launcher = launcher)
     }
 }

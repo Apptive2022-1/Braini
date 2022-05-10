@@ -4,6 +4,6 @@ import androidx.activity.result.ActivityResult
 import com.example.braini.domain.IntentSenderLauncher
 
 interface ILoginViewModel {
-    fun onActivityResult(result: ActivityResult)
-    fun beginSignIn(launcher: IntentSenderLauncher)
+    fun googleResultListener(result: ActivityResult)
+    fun googleSignIn(launcher: IntentSenderLauncher)
 }

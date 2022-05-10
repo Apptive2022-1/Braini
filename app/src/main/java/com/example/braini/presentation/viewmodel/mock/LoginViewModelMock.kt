@@ -5,11 +5,11 @@ import com.example.braini.domain.IntentSenderLauncher
 import com.example.braini.presentation.viewmodel.interfaces.ILoginViewModel
 
 class LoginViewModelMock: ILoginViewModel {
-    override fun onActivityResult(result: ActivityResult) {
+    override fun googleResultListener(result: ActivityResult) {
         TODO("Not yet implemented")
     }
 
-    override fun beginSignIn(launcher: IntentSenderLauncher) {
+    override fun googleSignIn(launcher: IntentSenderLauncher) {
         TODO("Not yet implemented")
     }
 

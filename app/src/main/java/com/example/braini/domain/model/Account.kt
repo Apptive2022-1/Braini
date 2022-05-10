@@ -1,7 +1,7 @@
 package com.example.braini.domain.model
 
 /** 로그인한 유저를 표현하는 클래스 */
-class User(
+class Account(
     val token: String = "",
     val id: String,
     val email: String,
@@ -14,7 +14,7 @@ class User(
     }
 
     override fun equals(other: Any?): Boolean {
-        if (other !is User) return false
+        if (other !is Account) return false
         return id == other.id
     }
 
@@ -27,6 +27,6 @@ class User(
     }
 
     companion object {
-        val GUEST = User("", "", "", "Guest")
+        val GUEST = Account("", "", "", "Guest")
     }
 }

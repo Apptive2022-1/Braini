@@ -1,11 +1,11 @@
 package com.example.braini.presentation.viewmodel
 
-import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.ActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.example.braini.domain.IntentSenderLauncher
+import com.example.braini.domain.model.Account
 import com.example.braini.domain.utils.AccountManager
 import com.example.braini.domain.utils.GoogleOneTap
 import com.example.braini.presentation.viewmodel.interfaces.ILoginViewModel
@@ -14,13 +14,19 @@ import javax.inject.Inject
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
-    private val oneTap: GoogleOneTap
+    private val accountManager: AccountManager,
+    private val googleSignIn: GoogleOneTap
 ): ViewModel(), ILoginViewModel {
-    override fun googleResultListener(result: ActivityResult) {
-        oneTap.onActicityResult(result)
+    private val _account = mutableStateOf(accountManager.currentAccount)
+    val account: State<Account> get() = _account
+
+    override fun isLoggedIn(): Boolean = accountManager.isLoggedIn()
+
+    override fun googleResultListener(result: ActivityResult, onSuccess: () -> Unit) {
+        googleSignIn.onActicityResult(result = result, onSuccess = onSuccess)
     }
 
     override fun googleSignIn(launcher: IntentSenderLauncher) {
-        oneTap.beginSignIn(launcher = launcher)
+        googleSignIn.beginSignIn(launcher = launcher)
     }
 }

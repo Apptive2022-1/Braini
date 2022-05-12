@@ -54,8 +54,8 @@ fun Splash(alpha : Float) {
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Image(modifier = Modifier.alpha(alpha = alpha)
-            ,painter = painterResource(id = R.drawable.img), contentDescription = null)
+        Image(modifier = Modifier.alpha(alpha = alpha).size(100.dp)
+            ,painter = painterResource(id = R.drawable.img), contentDescription = null,)
         Spacer(modifier = Modifier.height(15.dp))
         Image(modifier = Modifier.alpha(alpha = alpha)
             ,painter = painterResource(id = R.drawable.img_1), contentDescription = null)

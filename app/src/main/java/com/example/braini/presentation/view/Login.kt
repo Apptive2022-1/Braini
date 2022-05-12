@@ -30,37 +30,17 @@ import com.example.braini.presentation.navigation.Screen
 import com.example.braini.presentation.popAndNavigate
 import com.example.braini.presentation.viewmodel.interfaces.ILoginViewModel
 import com.example.braini.presentation.viewmodel.mock.LoginViewModelMock
+import com.example.braini.presentation.getGradientVertical
+import com.example.braini.presentation.view.ModalBottomSheet
+import kotlinx.coroutines.launch
 
 @Composable
-fun LoginScreen(
-    viewModel: ILoginViewModel = LoginViewModelMock(),
-    navController: NavController
-){
-    LoginBackground {
-        Header()
-        Clouds()
-        Description()
-        Buttons(viewModel = viewModel, navController = navController)
-    }
+fun LoginScreen(){
+    ModalBottomSheet()
 }
 
 @Composable
-private fun LoginBackground(
-    content: @Composable ColumnScope.() -> Unit = {}
-) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(
-                brush = Brush.verticalGradient(listOf(Color(55, 103, 706), Color(143, 171, 217))),
-                shape = RectangleShape
-            ),
-        content = content
-    )
-}
-
-@Composable
-private fun ColumnScope.Header()
+public fun ColumnScope.header()
 {
     Text(modifier = Modifier
         .width(230.dp)
@@ -74,7 +54,7 @@ private fun ColumnScope.Header()
 }
 
 @Composable
-private fun ColumnScope.Clouds(){
+public fun ColumnScope.Clouds(){
     Box(modifier = Modifier
         .weight(2f)
         .padding(top = 50.dp)
@@ -87,13 +67,9 @@ private fun ColumnScope.Clouds(){
 }
 
 @Composable
-private fun ColumnScope.Description(){
-    Box(
-        modifier = Modifier.weight(1f)
-    ){
-        Column(
-            modifier = Modifier.padding(top = 40.dp)
-        ) {
+public fun ColumnScope.Description(){
+    Box(modifier = Modifier.weight(1f)){
+        Column(modifier = Modifier.padding(top = 40.dp)) {
             Text("'Braini'는",
                 modifier = Modifier
                     .fillMaxWidth()
@@ -117,13 +93,13 @@ private fun ColumnScope.Description(){
 
 
 @Composable
-private fun ColumnScope.Buttons(){
+public fun ColumnScope.Buttons(onClick: () -> Unit){
     Box(modifier = Modifier.weight(1f)){
         Column(modifier = Modifier
             .fillMaxWidth()
             .padding(top = 50.dp),
             horizontalAlignment = Alignment.CenterHorizontally) {
-            Button(onClick = {},
+            Button(onClick = onClick,
                 modifier = Modifier.width(320.dp),
                 colors = ButtonDefaults.buttonColors(Color(0xffc9e4fd)),
                 shape = RoundedCornerShape(15.dp)
@@ -148,10 +124,55 @@ private fun ColumnScope.Buttons(){
 }
 
 
+@Composable
+fun modallogin(){
+Box(modifier = Modifier
+    .fillMaxWidth()
+    .height(400.dp)
+    .background(Color.White)){
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .padding(10.dp),
+    horizontalAlignment = Alignment.CenterHorizontally) {
+        Box(modifier = Modifier
+            .width(200.dp)
+            .height(10.dp)
+            .clip(RoundedCornerShape(50))
+            .background(Color.Gray))
+        Spacer(modifier = Modifier.height(20.dp))
+        Text(text = "SNS 계정으로 로그인")
+        Spacer(modifier = Modifier.height(10.dp))
+        Button(modifier = Modifier
+            .width(350.dp)
+            .clip(RoundedCornerShape(40)),
+            colors = ButtonDefaults.buttonColors(Color.White),
+            onClick = { /*TODO*/ }) {
+            Image(modifier = Modifier.size(30.dp),
+                painter = painterResource(id = R.drawable.google),
+                contentDescription = null )
+            Text(text = "Google로 시작하기")
+        }
+        Spacer(modifier = Modifier.height(8.dp))
+        Button(modifier = Modifier
+            .width(350.dp)
+            .clip(RoundedCornerShape(40)),
+            colors = ButtonDefaults.buttonColors(Color(0xfffbe300)),
+            onClick = { /*TODO*/ }) {
+            Image(modifier = Modifier.size(30.dp),
+                painter = painterResource(id = R.drawable.kakao),
+                contentDescription = null)
+            Text(text = "카카오톡으로 시작하기")
+        }
+        Text(modifier = Modifier.padding(top = 10.dp, bottom = 10.dp),
+            text = "또는")
+
+    }
+}
+}
+
 
 @Preview
 @Composable
 fun BPreview(){
-    val navController = rememberNavController()
-    LoginScreen(navController = navController)
+    modallogin()
 }

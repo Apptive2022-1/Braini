@@ -5,8 +5,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.apptive.braini.view.LoginScreen
-import com.apptive.braini.view.RoomSelectScreen
+import com.apptive.braini.presentation.view.LoginScreen
+import com.apptive.braini.presentation.view.RoomSelectScreen
 import com.example.braini.presentation.view.SplashScreen
 import com.example.braini.presentation.viewmodel.LoginViewModel
 

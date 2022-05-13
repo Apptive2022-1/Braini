@@ -1,4 +1,4 @@
-package com.apptive.braini.view
+package com.apptive.braini.presentation.view
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -220,7 +220,7 @@ private fun Lock(){
     )
 }
 
-@Preview(showSystemUi = true)
+@Preview(showSystemUi = true, name = "RoomSelectPreview")
 @Composable
 private fun RoomSelectScreenPreview() {
     LayoutPracticeTheme() {

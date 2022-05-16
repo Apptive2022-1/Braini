@@ -6,10 +6,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.ClickableText
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
+import androidx.compose.material.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
@@ -220,9 +217,90 @@ private fun ModalBottomSheet(
                             contentDescription = null)
                         Text(text = "카카오톡으로 시작하기")
                     }
-                    Text(modifier = Modifier.padding(top = 10.dp, bottom = 10.dp),
-                        text = "또는")
-
+                    Text(
+                        modifier = Modifier.padding(top = 10.dp, bottom = 10.dp),
+                        text = "또는"
+                    )
+                    Box(
+                        modifier = Modifier
+                            .width(350.dp)
+                            .clip(RoundedCornerShape(30))
+                            .background(Color(0xffd1e8fd))
+                            .height(45.dp),
+                        contentAlignment = Alignment.Center
+                    ){
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                modifier = Modifier.weight(2f),
+                                text = "아이디",
+                                textAlign = TextAlign.Center
+                            )
+                            Spacer(
+                                modifier = Modifier
+                                    .width(4.dp)
+                                    .height(35.dp)
+                                    .background(Color(0xffa7c4f1))
+                            )
+                            BasicTextField(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .weight(7f)
+                                    .padding(start = 10.dp),
+                                value = "",
+                                onValueChange = {}
+                            )
+                        }
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+                    Box(
+                        modifier = Modifier
+                            .width(350.dp)
+                            .clip(RoundedCornerShape(30))
+                            .background(Color(0xffd1e8fd))
+                            .height(45.dp),
+                        Alignment.Center
+                    ){
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                modifier = Modifier.weight(2f),
+                                text = "비밀번호",
+                                textAlign = TextAlign.Center
+                            )
+                            Spacer(
+                                modifier = Modifier
+                                    .width(4.dp)
+                                    .height(35.dp)
+                                    .background(Color(0xffa7c4f1))
+                            )
+                            BasicTextField(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .weight(7f)
+                                    .padding(start = 10.dp),
+                                value = "",
+                                onValueChange = {}
+                            )
+                        }
+                    }
+                    Button(
+                        modifier = Modifier
+                            .width(350.dp)
+                            .clip(RoundedCornerShape(40)),
+                        colors = ButtonDefaults.buttonColors(Color(0xffd1e8fd)),
+                        onClick = { /*TODO*/ }
+                    ) {
+                        Text(text = "로  그  인")
+                    }
+                    Spacer(modifier = Modifier.height(10.dp))
+                    ClickableText(
+                        text = AnnotatedString("아이디/비밀번호 찾기"),
+                        style = TextStyle(textDecoration = TextDecoration.Underline),
+                        onClick ={}
+                    )
                 }
             }
         },
@@ -231,85 +309,7 @@ private fun ModalBottomSheet(
         sheetShape = RoundedCornerShape(30.dp),
         content = content
     )
-        Box(
-            modifier = Modifier
-                .width(350.dp)
-        ){
-                .clip(RoundedCornerShape(30))
-                .background(Color(0xffd1e8fd))
-                .height(45.dp),
-            Alignment.Center
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(modifier = Modifier.weight(2f),
-                    textAlign = TextAlign.Center)
-                    text = "아이디",
-                Spacer(
-                    modifier = Modifier
-                    .width(4.dp)
-                    .height(35.dp)
-                    .background(Color(0xffa7c4f1))
-                )
-                BasicTextField(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(7f)
-                        .padding(start = 10.dp),
-                    value = "",
-                    onValueChange = {}
-                )
-            }
-        }
-        Spacer(modifier = Modifier.height(8.dp))
-        Box(
-            modifier = Modifier
-                .width(350.dp)
-                .clip(RoundedCornerShape(30))
-                .background(Color(0xffd1e8fd))
-                .height(45.dp),
-            Alignment.Center
-        ){
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    modifier = Modifier.weight(2f),
-                    text = "비밀번호",
-                    textAlign = TextAlign.Center
-                )
-                Spacer(
-                    modifier = Modifier
-                    .width(4.dp)
-                    .height(35.dp)
-                    .background(Color(0xffa7c4f1))
-                )
-                BasicTextField(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .weight(7f)
-                        .padding(start = 10.dp),
-                    value = "",
-                    onValueChange = {}
-                )
-            }
-        }
-        Button(
-            modifier = Modifier
-                .width(350.dp)
-                .clip(RoundedCornerShape(40)),
-            colors = ButtonDefaults.buttonColors(Color(0xffd1e8fd)),
-            onClick = { /*TODO*/ }
-        ) {
-            Text(text = "로  그  인")
-        }
-        Spacer(modifier = Modifier.height(10.dp))
-        ClickableText(
-            text = AnnotatedString("아이디/비밀번호 찾기"),
-            style = TextStyle(textDecoration = TextDecoration.Underline),
-            onClick ={}
-        )
-    }
+
 }
 
 

@@ -1,4 +1,4 @@
-package com.example.braini
+package com.example.braini._enums
 
 enum class Side {
     LEFT, RIGHT

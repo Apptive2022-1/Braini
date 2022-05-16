@@ -1,5 +1,7 @@
 package com.apptive.braini.presentation.view
 
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -27,6 +29,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.apptive.braini.R
+import com.example.braini.presentation.navigation.Screen
+import com.example.braini.presentation.popAndNavigate
 import com.example.braini.presentation.viewmodel.LoginViewModel
 import com.example.braini.presentation.viewmodel.interfaces.ILoginViewModel
 import com.example.braini.presentation.viewmodel.mock.LoginViewModelMock
@@ -41,7 +45,11 @@ fun LoginScreen(
     val coroutineScope = rememberCoroutineScope()
     val sheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
 
-    ModalBottomSheet(sheetState) {
+    ModalBottomSheet(
+        viewModel = viewModel,
+        navController = navController,
+        sheetState = sheetState
+    ) {
         LoginBackground {
             header()
             Clouds()
@@ -74,10 +82,10 @@ public fun ColumnScope.header()
 {
     Text(
         modifier = Modifier
-        .width(230.dp)
-        .weight(0.9f)
-        .padding(20.dp)
-        .padding(top = 20.dp),
+            .width(230.dp)
+            .weight(0.9f)
+            .padding(20.dp)
+            .padding(top = 20.dp),
         text = "HELLO!",
         fontSize = 50.sp,
         color = Color.Black,
@@ -89,9 +97,9 @@ public fun ColumnScope.header()
 public fun ColumnScope.Clouds(){
     Box(
         modifier = Modifier
-        .weight(2f)
-        .padding(top = 50.dp)
-        .fillMaxWidth(),
+            .weight(2f)
+            .padding(top = 50.dp)
+            .fillMaxWidth(),
         contentAlignment = Alignment.Center
     ){
         Image(
@@ -119,8 +127,8 @@ public fun ColumnScope.Description(){
             )
             Text(
                 modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 30.dp,),
+                    .fillMaxWidth()
+                    .padding(start = 30.dp,),
                 color = Color.Black,
                 fontSize = 23.sp,
                 fontWeight = FontWeight.Bold,
@@ -138,8 +146,8 @@ public fun ColumnScope.Buttons(onClick: () -> Unit){
     {
         Column(
             modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 50.dp),
+                .fillMaxWidth()
+                .padding(top = 50.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Button(
@@ -175,9 +183,23 @@ public fun ColumnScope.Buttons(onClick: () -> Unit){
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun ModalBottomSheet(
+    viewModel: ILoginViewModel,
+    navController: NavController,
     sheetState: ModalBottomSheetState,
     content: @Composable () -> Unit
 ){
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.StartIntentSenderForResult(),
+        onResult = { result ->
+            viewModel.googleResultListener(
+                result = result,
+                onSuccess = {
+                    navController.popAndNavigate(Screen.RoomCreate.route)
+                }
+            )
+        }
+    )
+
     ModalBottomSheetLayout(
         sheetContent = {
             Box(modifier = Modifier
@@ -196,11 +218,15 @@ private fun ModalBottomSheet(
                     Spacer(modifier = Modifier.height(20.dp))
                     Text(text = "SNS 계정으로 로그인")
                     Spacer(modifier = Modifier.height(10.dp))
-                    Button(modifier = Modifier
-                        .width(350.dp)
-                        .clip(RoundedCornerShape(40)),
+                    Button(
+                        modifier = Modifier
+                            .width(350.dp)
+                            .clip(RoundedCornerShape(40)),
                         colors = ButtonDefaults.buttonColors(Color.White),
-                        onClick = { /*TODO*/ }) {
+                        onClick = {
+                            viewModel.googleSignIn(launcher)
+                        }
+                    ) {
                         Image(modifier = Modifier.size(30.dp),
                             painter = painterResource(id = R.drawable.google),
                             contentDescription = null )

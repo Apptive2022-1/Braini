@@ -37,7 +37,7 @@ fun SplashScreen(
         delay(4000)
         navController.popBackStack()
 
-        if (viewModel.isLoggedIn()) navController.navigate(Screen.RoomSelect.route)
+        if (viewModel.isLoggedIn()) navController.navigate(Screen.RoomCreate.route)
         else                        navController.navigate(Screen.Login.route)
     }
 

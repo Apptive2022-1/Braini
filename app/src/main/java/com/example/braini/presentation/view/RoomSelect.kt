@@ -1,15 +1,21 @@
 package com.apptive.braini.presentation.view
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material.TextButton
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -38,84 +44,77 @@ private fun RoomSelectContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 26.dp)
+            .padding(horizontal = 38.dp, vertical = 75.dp)
             .wrapContentSize(Alignment.Center),
         horizontalAlignment = Alignment.CenterHorizontally,
         content = content
     )
 }
 
-
 @Composable
 private fun BrainiButton(
     modifier: Modifier = Modifier,
-    color: Color = Blue700,
+    selected: Boolean = true,
+    onClick: () -> Unit = {},
     content: @Composable BoxScope.()->Unit = {}
 ){
+    // 선택되지 않았을 경우 투명도 주기
+    val alpha = if (selected) 1f else 0.5f
+    val alphaInt = if (selected) 255 else 100
+
     Box(modifier = modifier
         .fillMaxWidth()
         .height(36.dp)
-        .clip(RoundedCornerShape(30))
-        .background(color),
-        content = content
+        .clip(RoundedCornerShape(40))
+        .background(
+            brush = Brush.horizontalGradient(listOf(Color(188, 195, 254, alphaInt), Color(201, 228, 253, alphaInt)))
+        )
+        .alpha(alpha)
+        .clickable { onClick() },
+        content = content,
+        contentAlignment = Alignment.Center
     )
 }
 
 @Composable
 private fun BrainiDividedButton(
     modifier: Modifier = Modifier,
-    side: Side,
-    color: Color = Blue500,
     leftText: String = "",
-    rightText: String = ""
-) {
-    BrainiButton(color = color) {
-        Row(Modifier.fillMaxSize()) {
-            Box(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxHeight(),
-                contentAlignment = Alignment.Center
-            ) {
-                if (side == Side.LEFT) {
-                    BrainiButton(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .clip(RoundedCornerShape(30)),
-                        color = Blue700,
-                    )
-                }
-                Text(
-                    modifier = Modifier,
-                    text = leftText,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Medium
-                )
-            }
-            Box(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxHeight(),
-                contentAlignment = Alignment.Center
-            ) {
-                if (side == Side.RIGHT) {
-                    BrainiButton(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .clip(RoundedCornerShape(30)),
-                        color = Blue700
-                    )
-                }
-                Text(
-                    modifier = Modifier,
-                    text = rightText,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.Medium
-                )
-            }
+    rightText: String = "",
+    leftOnClick: () -> Unit = {},
+    rightOnClick: () -> Unit = {},
+    selected: Side = Side.LEFT
+    ){
+    Row(){
+        BrainiButton(
+            modifier = modifier.width(151.dp),
+            selected = (selected == Side.LEFT),
+            onClick = leftOnClick
+        )
+        {
+            Text(
+                text = leftText,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Medium
+            )
+
+        }
+        Spacer(modifier = Modifier.width(13.dp))
+
+        BrainiButton(
+            modifier = modifier.width(151.dp),
+            selected = (selected == Side.RIGHT),
+            onClick = rightOnClick
+        ){
+            Text(
+                text = rightText,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Medium
+            )
         }
     }
 }
+
 @Composable
 private fun Title(){
         Text(
@@ -125,7 +124,7 @@ private fun Title(){
             fontWeight = FontWeight.SemiBold
         )
 
-        Spacer(modifier = Modifier.height(78.dp))
+        Spacer(modifier = Modifier.height(39.dp))
     }
 
 @Composable
@@ -135,23 +134,33 @@ private fun RoomName(){
         color = Color.Black,
         fontSize = 16.sp,
         fontWeight = FontWeight.SemiBold,
-        modifier = Modifier.padding(end = 260.dp)
+        modifier = Modifier.padding(end = 240.dp)
     )
 
     BrainiButton()
 
-    Spacer(modifier = Modifier.height(60.dp))
+    Spacer(modifier = Modifier.height(40.dp))
 }
 
 @Composable
 private fun Number() {
-    BrainiDividedButton(
-        side = Side.RIGHT,
-        leftText = "참여인원",
-        rightText = "6"
+    Text(
+        text = "참여인원",
+        color = Color.Black,
+        fontSize = 16.sp,
+        fontWeight = FontWeight.SemiBold,
+        modifier = Modifier.padding(end = 250.dp)
     )
+    BrainiButton(){
+        Text(
+            text = "6",
+            color = Color.Black,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Medium,
 
-    Spacer(modifier = Modifier.height(37.dp))
+        )
+    }
+    Spacer(modifier = Modifier.height(40.dp))
 }
 
 @Composable
@@ -161,7 +170,7 @@ private fun Date(){
         color = Color.Black,
         fontSize = 16.sp,
         fontWeight = FontWeight.SemiBold,
-        modifier = Modifier.padding(end = 260.dp)
+        modifier = Modifier.padding(end = 250.dp)
     )
 
     BrainiButton()
@@ -176,7 +185,7 @@ private fun Time(){
         color = Color.Black,
         fontSize = 16.sp,
         fontWeight = FontWeight.SemiBold,
-        modifier = Modifier.padding(end = 260.dp)
+        modifier = Modifier.padding(end = 250.dp)
     )
 
     BrainiButton()
@@ -186,21 +195,23 @@ private fun Time(){
 
 @Composable
 private fun Calling(){
+    var selected: Side by remember { mutableStateOf(Side.LEFT) }
+
     Text(
         text = "음성 통화",
         color = Color.Black,
         fontSize = 16.sp,
         fontWeight = FontWeight.SemiBold,
-        modifier = Modifier.padding(end = 260.dp)
+        modifier = Modifier.padding(end = 250.dp)
     )
-
     BrainiDividedButton(
-        side = Side.LEFT,
         leftText = "사용 O",
-        rightText = "사용 X"
+        rightText = "사용 X",
+        selected = selected,
+        leftOnClick = { selected = Side.LEFT },
+        rightOnClick = { selected = Side.RIGHT }
     )
-
-    Spacer(modifier = Modifier.height(37.dp))
+    Spacer(modifier = Modifier.height(41.dp))
 }
 
 @Composable
@@ -210,17 +221,16 @@ private fun Lock(){
         color = Color.Black,
         fontSize = 16.sp,
         fontWeight = FontWeight.SemiBold,
-        modifier = Modifier.padding(end = 260.dp)
+        modifier = Modifier.padding(end = 250.dp)
     )
-
     BrainiDividedButton(
-        side = Side.LEFT,
         leftText = "사용 O",
-        rightText = "사용 X"
+        rightText = "사용 X",
     )
 }
 
-@Preview(showSystemUi = true, name = "RoomSelectPreview")
+
+@Preview(showSystemUi = true)
 @Composable
 private fun RoomSelectScreenPreview() {
     LayoutPracticeTheme() {

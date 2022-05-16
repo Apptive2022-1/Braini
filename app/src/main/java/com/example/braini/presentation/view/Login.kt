@@ -1,7 +1,5 @@
 package com.apptive.braini.presentation.view
 
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -12,9 +10,8 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -23,136 +20,61 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navOptions
 import com.apptive.braini.R
-import com.example.braini.presentation.navigation.Screen
-import com.example.braini.presentation.popAndNavigate
-import com.example.braini.presentation.viewmodel.interfaces.ILoginViewModel
-import com.example.braini.presentation.viewmodel.mock.LoginViewModelMock
+import com.example.braini.presentation.view.ModalBottomSheet
+import com.example.braini.presentation.viewmodel.LoginViewModel
 
 @Composable
 fun LoginScreen(
-    viewModel: ILoginViewModel = LoginViewModelMock(),
+    viewModel: LoginViewModel,
     navController: NavController
 ){
-    LoginBackground {
-        Header()
-        Clouds()
-        Description()
-        Buttons(viewModel = viewModel, navController = navController)
-    }
+    ModalBottomSheet()
 }
 
 @Composable
-private fun LoginBackground(
-    content: @Composable ColumnScope.() -> Unit = {}
-) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .background(
-                brush = Brush.verticalGradient(listOf(Color(55, 103, 706), Color(143, 171, 217))),
-                shape = RectangleShape
-            ),
-        content = content
-    )
-}
-
-@Composable
-private fun ColumnScope.Header()
+public fun ColumnScope.header()
 {
-    Text(
-        modifier = Modifier
-            .width(200.dp)
-            .weight(0.7f)
-            .padding(20.dp)
-            .padding(top = 20.dp),
-        text = "Hello!",
+    Text(modifier = Modifier
+        .width(230.dp)
+        .weight(0.9f)
+        .padding(20.dp)
+        .padding(top = 20.dp),
+        text = "HELLO!",
         fontSize = 50.sp,
-        color = Color.White,
-        textAlign = TextAlign.Center
-    )
+        color = Color.Black,
+        textAlign = TextAlign.Center)
 }
 
 @Composable
-private fun ColumnScope.Clouds(){
-    Box(
-        modifier = Modifier
-            .weight(2f)
-            .padding(top = 50.dp)
-    ) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(start = 260.dp)
-        ){
-            Image(
-                modifier = Modifier.size(100.dp),
-                painter = painterResource(id = R.drawable.small_cloud),
-                contentDescription = null,
-            )
-        }
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(top = 20.dp, start = 20.dp)
-        ){
-            Image(
-                modifier = Modifier.size(150.dp),
-                painter = painterResource(id = R.drawable.middle_cloud),
-                contentDescription = null,
-            )
-            Image(
-                modifier = Modifier
-                    .size(150.dp)
-                    .offset(-5.dp, -5.dp),
-                painter = painterResource(id = R.drawable.middle_cloud_line),
-                contentDescription = null,
-            )
-        }
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(top = 90.dp, start = 160.dp)
-        ){
-            Image(
-                painter = painterResource(id = R.drawable.large_cloud),
-                contentDescription = null,
-                modifier = Modifier.size(200.dp)
-            )
-            Image(
-                modifier = Modifier
-                    .size(200.dp)
-                    .offset(-5.dp, -5.dp),
-                painter = painterResource(id = R.drawable.large_cloud_line),
-                contentDescription = null,
-            )
-        }
+public fun ColumnScope.Clouds(){
+    Box(modifier = Modifier
+        .weight(2f)
+        .padding(top = 50.dp)
+        .fillMaxWidth(),
+    contentAlignment = Alignment.Center){
+        Image(painter = painterResource(id = R.drawable.people),
+            contentDescription = null,
+        modifier = Modifier.size(350.dp))
     }
 }
 
 @Composable
-private fun ColumnScope.Description(){
-    Box(
-        modifier = Modifier.weight(1f)
-    ){
-        Column(
-            modifier = Modifier.padding(top = 40.dp)
-        ) {
+public fun ColumnScope.Description(){
+    Box(modifier = Modifier.weight(1f)){
+        Column(modifier = Modifier.padding(top = 40.dp)) {
             Text("'Braini'는",
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 30.dp,),
-                color = Color.White,
+                color = Color.Black,
                 fontSize = 23.sp,
                 fontWeight = FontWeight.Bold,
             )
-            Text(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(start = 30.dp,),
-                color = Color.White,
+            Text( modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 30.dp,),
+                color = Color.Black,
                 fontSize = 23.sp,
                 fontWeight = FontWeight.Bold,
                 text = "여러분의 아이디어를 응원합니다"
@@ -164,64 +86,86 @@ private fun ColumnScope.Description(){
 
 
 @Composable
-private fun ColumnScope.Buttons(
-    viewModel: ILoginViewModel,
-    navController: NavController
-){
-    Box(
-        modifier = Modifier.weight(1f)
-    ){
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 50.dp),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            val launcher = rememberLauncherForActivityResult(
-                contract = ActivityResultContracts.StartIntentSenderForResult(),
-                onResult = { result ->
-                    viewModel.googleResultListener(
-                        result = result,
-                        onSuccess = { navController.popAndNavigate(Screen.RoomSelect.route) }
-                    )
-                }
-            )
-
-            Button(
-                onClick = {
-                    viewModel.googleSignIn(launcher = launcher)
-                },
+public fun ColumnScope.Buttons(onClick: () -> Unit){
+    Box(modifier = Modifier.weight(1f)){
+        Column(modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 50.dp),
+            horizontalAlignment = Alignment.CenterHorizontally) {
+            Button(onClick = onClick,
                 modifier = Modifier.width(320.dp),
-                colors = ButtonDefaults.buttonColors(Color.White),
+                colors = ButtonDefaults.buttonColors(Color(0xffc9e4fd)),
                 shape = RoundedCornerShape(15.dp)
             ) {
                 Text(
                     text = stringResource(R.string.login_button),
                     textAlign = TextAlign.Center,
-                    color = Color(55, 103, 706),
-                    fontWeight = FontWeight.Bold
-                )
+                    color = Color.Black)
             }
             Button(
                 onClick = { /*TODO*/ },
                 modifier = Modifier.width(320.dp),
-                colors = ButtonDefaults.buttonColors(Color.White),
-                shape = RoundedCornerShape(15.dp)
-            ) {
-                Text(
-                    text = stringResource(R.string.new_user_button),
+                colors = ButtonDefaults.buttonColors(Color(0xffc9e4fd)),
+                shape = RoundedCornerShape(15.dp)) {
+                Text(text = stringResource(R.string.new_user_button),
                     textAlign = TextAlign.Center,
-                    color = Color(55,103,706),
-                    fontWeight = FontWeight.Bold
-                )
+                    color = Color.Black)
+
             }
         }
     }
 }
 
+
+@Composable
+fun modallogin(){
+Box(modifier = Modifier
+    .fillMaxWidth()
+    .height(400.dp)
+    .background(Color.White)){
+    Column(modifier = Modifier
+        .fillMaxSize()
+        .padding(10.dp),
+    horizontalAlignment = Alignment.CenterHorizontally) {
+        Box(modifier = Modifier
+            .width(200.dp)
+            .height(10.dp)
+            .clip(RoundedCornerShape(50))
+            .background(Color.Gray))
+        Spacer(modifier = Modifier.height(20.dp))
+        Text(text = "SNS 계정으로 로그인")
+        Spacer(modifier = Modifier.height(10.dp))
+        Button(modifier = Modifier
+            .width(350.dp)
+            .clip(RoundedCornerShape(40)),
+            colors = ButtonDefaults.buttonColors(Color.White),
+            onClick = { /*TODO*/ }) {
+            Image(modifier = Modifier.size(30.dp),
+                painter = painterResource(id = R.drawable.google),
+                contentDescription = null )
+            Text(text = "Google로 시작하기")
+        }
+        Spacer(modifier = Modifier.height(8.dp))
+        Button(modifier = Modifier
+            .width(350.dp)
+            .clip(RoundedCornerShape(40)),
+            colors = ButtonDefaults.buttonColors(Color(0xfffbe300)),
+            onClick = { /*TODO*/ }) {
+            Image(modifier = Modifier.size(30.dp),
+                painter = painterResource(id = R.drawable.kakao),
+                contentDescription = null)
+            Text(text = "카카오톡으로 시작하기")
+        }
+        Text(modifier = Modifier.padding(top = 10.dp, bottom = 10.dp),
+            text = "또는")
+
+    }
+}
+}
+
+
 @Preview
 @Composable
 fun BPreview(){
-    val navController = rememberNavController()
-    LoginScreen(navController = navController)
+    modallogin()
 }

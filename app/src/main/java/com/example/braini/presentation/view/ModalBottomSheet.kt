@@ -31,7 +31,7 @@ fun ModalBottomSheet() {
         },
         sheetState = sheetState,
         sheetBackgroundColor = Color.White,
-        sheetShape = RoundedCornerShape(10.dp)
+        sheetShape = RoundedCornerShape(30.dp)
     ) {
         Column(modifier = Modifier
             .fillMaxSize()

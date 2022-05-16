@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.apptive.braini.presentation.view.LoginScreen
 import com.apptive.braini.presentation.view.RoomSelectScreen
+import com.example.braini.presentation.view.RoomCreateScreen
 import com.example.braini.presentation.view.SplashScreen
 import com.example.braini.presentation.viewmodel.LoginViewModel
 
@@ -26,6 +27,9 @@ fun SetupNavGraph(navController: NavHostController){
         }
         composable(route = Screen.RoomSelect.route) {
             RoomSelectScreen()
+        }
+        composable(route = Screen.RoomCreate.route) {
+            RoomCreateScreen()
         }
     }
 }

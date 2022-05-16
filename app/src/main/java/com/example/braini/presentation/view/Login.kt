@@ -19,11 +19,16 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.apptive.braini.R
 import com.example.braini.presentation.view.ModalBottomSheet
+import com.example.braini.presentation.viewmodel.LoginViewModel
 
 @Composable
-fun LoginScreen(){
+fun LoginScreen(
+    viewModel: LoginViewModel,
+    navController: NavController
+){
     ModalBottomSheet()
 }
 

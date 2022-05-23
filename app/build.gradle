@@ -93,7 +93,7 @@ dependencies {
     kapt "androidx.room:room-compiler:$room_version"
 
     // Coroutines
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1'
 
     // Accompanist (Compose Util)
     implementation "com.google.accompanist:accompanist-flowlayout:$accompanist_version"
@@ -107,6 +107,9 @@ dependencies {
 
     // Glide (Image Loader)
     implementation 'com.github.bumptech.glide:glide:4.12.0'
+
+    // Kakao Login
+    implementation "com.kakao.sdk:v2-user:2.9.1"
 }
 
 //Navigation Compose

@@ -1,6 +1,7 @@
 package com.example.braini.presentation.viewmodel
 
 import androidx.activity.result.ActivityResult
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -19,6 +20,8 @@ class LoginViewModel @Inject constructor(
 ): ViewModel(), ILoginViewModel {
     private val _account = mutableStateOf(accountManager.currentAccount)
     val account: State<Account> get() = _account
+    override var accountId: MutableState<String> = mutableStateOf("anything")
+    override var accountPw: MutableState<String> = mutableStateOf("something")
 
     override fun isLoggedIn(): Boolean = accountManager.isLoggedIn()
 

@@ -283,14 +283,15 @@ private fun ModalBottomSheet(
                                     .height(35.dp)
                                     .background(Color(0xff345BC0))
                             )
+                            var textId by viewModel.accountId
                             BasicTextField(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .weight(7f)
                                     .padding(start = 10.dp),
-                                value = idtext,
+                                value = textId,
                                 onValueChange = {newText ->
-                                    idtext = newText
+                                    textId = newText
                                 },
                                 singleLine = true,
                                 keyboardOptions = KeyboardOptions(
@@ -323,14 +324,15 @@ private fun ModalBottomSheet(
                                     .height(35.dp)
                                     .background(Color(0xff345BC0))
                             )
+                            var textPw by viewModel.accountPw
                             BasicTextField(
                                 modifier = Modifier
                                     .fillMaxWidth()
                                     .weight(7f)
                                     .padding(start = 10.dp),
-                                value = pwtext,
+                                value = textPw,
                                 onValueChange = {newText ->
-                                    pwtext = newText},
+                                    textPw = newText},
                                 singleLine = true,
                                 visualTransformation = PasswordVisualTransformation(),
                                 keyboardOptions = KeyboardOptions(

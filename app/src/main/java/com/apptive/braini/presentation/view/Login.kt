@@ -83,7 +83,7 @@ private fun LoginBackground(
 }
 
 @Composable
-public fun ColumnScope.header()
+private fun ColumnScope.header()
 {
     Text(
         modifier = Modifier
@@ -99,7 +99,7 @@ public fun ColumnScope.header()
 }
 
 @Composable
-public fun ColumnScope.Clouds(){
+private fun ColumnScope.Clouds(){
     Box(
         modifier = Modifier
             .weight(2f)
@@ -116,7 +116,7 @@ public fun ColumnScope.Clouds(){
 }
 
 @Composable
-public fun ColumnScope.Description(){
+private fun ColumnScope.Description(){
     Box(modifier = Modifier.weight(1f))
     {
         Column(modifier = Modifier.padding(top = 60.dp))
@@ -180,7 +180,6 @@ public fun ColumnScope.Buttons(onClick: () -> Unit){
                     color = Color.Black,
                     fontWeight = FontWeight.Bold
                 )
-
             }
         }
     }
@@ -221,7 +220,6 @@ private fun ModalBottomSheet(
         sheetShape = RoundedCornerShape(topEnd = 30.dp, topStart = 30.dp),
         content = content
     )
-
 }
 
 @Composable

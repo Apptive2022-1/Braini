@@ -4,4 +4,5 @@
     <string name="new_user_button">회 원 가 입</string>
     <string name="client_id_android">340359310267-mlvj58fv4ucoqk8imoeu8hmc9do37u0u.apps.googleusercontent.com</string>
     <string name="client_id_server">340359310267-mlvj58fv4ucoqk8imoeu8hmc9do37u0u.apps.googleusercontent.com</string>
+    <string name="kakao_native_app_key">83dd8f2165af788733c509a0deab29f9</string>
 </resources>

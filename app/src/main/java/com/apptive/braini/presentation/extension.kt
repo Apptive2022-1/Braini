@@ -13,7 +13,8 @@ fun requireContext(): Context = LocalContext.current
 
 fun Context.getActivity() = this as ComponentActivity
 
-fun NavController.popAndNavigate(route: String) {
+fun Modifier.size(size: Size) = this.then(
+fun NavController.popNavigate(route: String) {
     this.popBackStack()
     this.navigate(route) {
         launchSingleTop = true

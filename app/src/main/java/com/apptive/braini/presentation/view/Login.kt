@@ -34,7 +34,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.apptive.braini.R
 import com.apptive.braini.presentation.navigation.Screen
-import com.apptive.braini.presentation.popAndNavigate
+import com.apptive.braini.presentation.popNavigate
 import com.apptive.braini.presentation.requireContext
 import com.apptive.braini.presentation.viewmodel.interfaces.ILoginViewModel
 import com.apptive.braini.presentation.viewmodel.mock.LoginViewModelMock
@@ -202,7 +202,7 @@ private fun ModalBottomSheet(
             viewModel.googleResultListener(
                 result = result,
                 navigate = {
-                    navController.popAndNavigate(Screen.RoomCreate.route)
+                    navController.popNavigate(Screen.RoomCreate.route)
                 }
             )
         }
@@ -233,7 +233,7 @@ private fun ModalBottomSheet(
                         colors = ButtonDefaults.buttonColors(Color(0xfffbe300)),
                         onClick = {
                             viewModel.loginWithKakao(context) {
-                                navController.popAndNavigate(Screen.RoomCreate.route)
+                                navController.popNavigate(Screen.RoomCreate.route)
                             }
                         }) {
                         Image(modifier = Modifier.size(30.dp)

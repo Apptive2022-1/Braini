@@ -8,11 +8,15 @@ import com.kakao.sdk.auth.AuthApiClient
 import com.kakao.sdk.common.model.*
 import com.kakao.sdk.user.UserApiClient
 
-/** 카카오 로그인을 활용하는 클래스 */
+/**
+ * accessToken in accessTokenInfo: 카카오 서버에서 식별하는 유저 ID (Long)
+ * accessToken in LoginApi: 서비스 서버에서 활용할 OAuth 토큰 (String)
+ */
+
+/** 카카오 로그인을 위한 헬퍼 클래스 */
 object KakaoLogin {
 
     fun login(context: Context, onSuccess: (Account) -> Unit) {
-        // 토큰이 유효한지 체크한다.
         tryLoginWithKakaoToken(
             callLoginApi = {
                 callKakaoLoginApi(context, onSuccess)
@@ -33,13 +37,11 @@ object KakaoLogin {
             if (error == null) return@accessTokenInfo onSuccess()
             if (error is KakaoSdkError && error.isInvalidTokenError()) callLoginApi()
 
-            // 기타 에러
-            "카카오 로그인 에러! $error".log()
+            "알 수 없는 로그인 에러! $error".log()
         }
     }
 
     private fun callKakaoLoginApi(context: Context, onSuccess: (Account) -> Unit) {
-        // 이곳에서 사용하는 accessToken은 REST API에 이용된다.
         UserApiClient.instance.loginWithKakaoTalk(context) { token, error ->
             if (error != null) handleError(context, error)
             else if (token != null) loginWithCachedAccount(onSuccess)

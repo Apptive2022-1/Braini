@@ -17,7 +17,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
@@ -29,6 +28,7 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -36,7 +36,6 @@ import androidx.navigation.compose.rememberNavController
 import com.apptive.braini.R
 import com.example.braini.presentation.navigation.Screen
 import com.example.braini.presentation.popAndNavigate
-import com.example.braini.presentation.viewmodel.LoginViewModel
 import com.example.braini.presentation.viewmodel.interfaces.ILoginViewModel
 import com.example.braini.presentation.viewmodel.mock.LoginViewModelMock
 import kotlinx.coroutines.launch
@@ -87,10 +86,10 @@ public fun ColumnScope.header()
 {
     Text(
         modifier = Modifier
-        .width(230.dp)
-        .weight(0.9f)
-        .padding(20.dp)
-        .padding(top = 40.dp),
+            .width(230.dp)
+            .weight(0.9f)
+            .padding(20.dp)
+            .padding(top = 40.dp),
         text = "HELLO!",
         fontSize = 43.sp,
         color = Color.Black,
@@ -149,8 +148,8 @@ public fun ColumnScope.Buttons(onClick: () -> Unit){
     {
         Column(
             modifier = Modifier
-            .fillMaxWidth()
-            .padding(top = 20.dp),
+                .fillMaxWidth()
+                .padding(top = 20.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Button(
@@ -195,8 +194,6 @@ private fun ModalBottomSheet(
     sheetState: ModalBottomSheetState,
     content: @Composable () -> Unit
 ){
-    var idtext by remember { mutableStateOf("")}
-    var pwtext by remember { mutableStateOf("")}
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.StartIntentSenderForResult(),
         onResult = { result ->
@@ -219,147 +216,14 @@ private fun ModalBottomSheet(
                     .fillMaxSize()
                     .padding(10.dp),
                     horizontalAlignment = Alignment.CenterHorizontally) {
-                    Box(modifier = Modifier
-                        .width(200.dp)
-                        .height(8.dp)
-                        .clip(RoundedCornerShape(50))
-                        .background(Color(0xffC4C4C4)))
-                    Spacer(modifier = Modifier.height(20.dp))
-                    Text(text = "SNS 계정으로 로그인",
-                    fontSize = 13.sp)
-                    Spacer(modifier = Modifier.height(20.dp))
-                    Button(modifier = Modifier
-                        .width(350.dp),
-                        shape = RoundedCornerShape(30),
-                        colors = ButtonDefaults.buttonColors(Color(0xfffbe300)),
-                        onClick = { /*TODO*/ }) {
-                        Image(modifier = Modifier.size(30.dp)
-                            .weight(2f),
-                            painter = painterResource(id = R.drawable.kakao),
-                            contentDescription = null)
-                        Text(modifier = Modifier.weight(10f)
-                            .padding(start = 35.dp),
-                            text = "카카오톡으로 시작하기")
-                    }
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Button(modifier = Modifier
-                        .width(350.dp),
-                        border = BorderStroke(1.dp, Color.Black),
-                        shape = RoundedCornerShape(30),
-                        colors = ButtonDefaults.buttonColors(Color.White),
-                        onClick = { /*TODO*/ }) {
-                        Image(modifier = Modifier.size(30.dp)
-                            .weight(2f),
-                            painter = painterResource(id = R.drawable.google),
-                            contentDescription = null )
-                        Text(modifier = Modifier.weight(10f)
-                            .padding(start = 53.dp),
-                            text = "구글로 시작하기")
-                    }
-                    Text(
-                        modifier = Modifier.padding(top = 10.dp, bottom = 10.dp),
-                        text = "또는"
-                    )
-                    Box(
-                        modifier = Modifier
-                            .width(350.dp)
-                            .border(width = 1.dp, color = Color(0xff345BC0), shape = RoundedCornerShape(30))
-                            .clip(RoundedCornerShape(30))
-                            .height(45.dp),
-                        contentAlignment = Alignment.Center
-                    ){
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(
-                                modifier = Modifier.weight(2f),
-                                text = "아이디",
-                                textAlign = TextAlign.Center,
-                                fontSize = 13.sp
-                            )
-                            Spacer(
-                                modifier = Modifier
-                                    .width(2.5.dp)
-                                    .height(35.dp)
-                                    .background(Color(0xff345BC0))
-                            )
-                            var textId by viewModel.accountId
-                            BasicTextField(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .weight(7f)
-                                    .padding(start = 10.dp),
-                                value = textId,
-                                onValueChange = {newText ->
-                                    textId = newText
-                                },
-                                singleLine = true,
-                                keyboardOptions = KeyboardOptions(
-                                    imeAction = ImeAction.Next
-                                )
-                            )
-                        }
-                    }
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Box(
-                        modifier = Modifier
-                            .width(350.dp)
-                            .border(width = 1.dp, color = Color(0xff345BC0), shape = RoundedCornerShape(30))
-                            .clip(RoundedCornerShape(30))
-                            .height(45.dp),
-                        Alignment.Center
-                    ){
-                        Row(
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            Text(
-                                modifier = Modifier.weight(2f),
-                                text = "비밀번호",
-                                textAlign = TextAlign.Center,
-                                fontSize = 13.sp
-                            )
-                            Spacer(
-                                modifier = Modifier
-                                    .width(2.5.dp)
-                                    .height(35.dp)
-                                    .background(Color(0xff345BC0))
-                            )
-                            var textPw by viewModel.accountPw
-                            BasicTextField(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .weight(7f)
-                                    .padding(start = 10.dp),
-                                value = textPw,
-                                onValueChange = {newText ->
-                                    textPw = newText},
-                                singleLine = true,
-                                visualTransformation = PasswordVisualTransformation(),
-                                keyboardOptions = KeyboardOptions(
-                                    keyboardType = KeyboardType.Password
-                                )
-                            )
-                        }
-                    }
-                    Spacer(modifier = Modifier.height(7.dp))
-                    Button(
-                        modifier = Modifier
-                            .width(350.dp),
-                        colors = ButtonDefaults.buttonColors(Color(0xff345BC0)),
-                        shape = RoundedCornerShape(30),
-                        onClick = { /*TODO*/ }
-                    ) {
-                        Text(modifier = Modifier.padding(top = 5.dp, bottom = 5.dp),
-                            color = Color.White,
-                            text = "로그인")
-                    }
-                    Spacer(modifier = Modifier.height(10.dp))
-                    ClickableText(
-                        text = AnnotatedString("아이디/비밀번호 찾기"),
-                        style = TextStyle(textDecoration = TextDecoration.Underline),
-                        onClick ={}
-                    )
-                    Spacer(modifier = Modifier.height(20.dp))
+                    ModalSheetTopHandle()
+                    SocialLoginText()
+                    SocialLoginButtons()
+                    OrText()
+                    IdTextField(viewModel)
+                    PwTextField(viewModel)
+                    LoginButton()
+                    FindIdPw()
                 }
             }
         },
@@ -371,6 +235,214 @@ private fun ModalBottomSheet(
 
 }
 
+@Composable
+private fun ColumnScope.ModalSheetTopHandle(){
+    Box(modifier = Modifier
+        .width(200.dp)
+        .height(8.dp)
+        .clip(RoundedCornerShape(50))
+        .background(Color(0xffC4C4C4)))
+    Spacer(modifier = Modifier.height(20.dp))
+}
+
+@Composable
+private fun ColumnScope.SocialLoginText(){
+    Text(text = "SNS 계정으로 로그인",
+        fontSize = 13.sp)
+    Spacer(modifier = Modifier.height(20.dp))
+}
+
+@Composable
+private fun ColumnScope.OrText(){
+    Text(
+        modifier = Modifier.padding(top = 10.dp, bottom = 10.dp),
+        text = "또는",
+        fontSize = 13.sp
+    )
+}
+
+@Composable
+private fun SocialLoginButton(
+    icon: Int,
+    text: String,
+    onClick: () -> Unit,
+    color: Color,
+    borderDp: Dp,
+    borderColor: Color,
+    textLocation : Dp
+) {
+    Button(modifier = Modifier
+        .width(350.dp),
+        border = BorderStroke(borderDp, color = borderColor),
+        shape = RoundedCornerShape(30),
+        colors = ButtonDefaults.buttonColors(color),
+        onClick = { /*TODO*/ }) {
+        Image(modifier = Modifier
+            .size(30.dp)
+            .weight(2f),
+             painter = painterResource(id = icon),
+            contentDescription = null)
+        Text(modifier = Modifier
+            .weight(10f)
+            .padding(start = textLocation),
+            text =  text)
+    }
+}
+
+@Composable
+private fun ColumnScope.SocialLoginButtons() {
+    SocialLoginButton(
+        icon = R.drawable.kakao,
+        text = "카카오톡으로 시작하기",
+        onClick = {},
+        color = Color(0xfffbe300),
+        borderDp = 0.dp,
+        borderColor = Color.White,
+        textLocation = 35.dp
+    )
+    Spacer(modifier = Modifier.height(8.dp))
+    SocialLoginButton(
+        icon = R.drawable.google,
+        text = "구글로 시작하기",
+        onClick = {},
+        color = Color.White,
+        borderDp = 1.dp,
+        borderColor = Color.Black,
+        textLocation = 53.dp
+    )
+}
+
+
+@Composable
+private fun ColumnScope.IdTextField(
+    viewModel: ILoginViewModel
+){
+    var idtext by remember { mutableStateOf("")}
+
+    Box(
+        modifier = Modifier
+            .width(350.dp)
+            .border(
+                width = 1.dp,
+                color = Color(0xff345BC0),
+                shape = RoundedCornerShape(30)
+            )
+            .clip(RoundedCornerShape(30))
+            .height(45.dp),
+        contentAlignment = Alignment.Center
+    ){
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                modifier = Modifier.weight(2f),
+                text = "아이디",
+                textAlign = TextAlign.Center,
+                fontSize = 13.sp
+            )
+            Spacer(
+                modifier = Modifier
+                    .width(2.5.dp)
+                    .height(35.dp)
+                    .background(Color(0xff345BC0))
+            )
+            var textId by viewModel.accountId
+            BasicTextField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(7f)
+                    .padding(start = 10.dp),
+                value = textId,
+                onValueChange = {newText ->
+                    textId = newText
+                },
+                singleLine = true,
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Next
+                )
+            )
+        }
+    }
+    Spacer(modifier = Modifier.height(8.dp))
+}
+
+@Composable
+private fun ColumnScope.PwTextField(
+    viewModel: ILoginViewModel
+){
+    var pwtext by remember { mutableStateOf("")}
+    Box(
+        modifier = Modifier
+            .width(350.dp)
+            .border(
+                width = 1.dp,
+                color = Color(0xff345BC0),
+                shape = RoundedCornerShape(30)
+            )
+            .clip(RoundedCornerShape(30))
+            .height(45.dp),
+        Alignment.Center
+    ){
+        Row(
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                modifier = Modifier.weight(2f),
+                text = "비밀번호",
+                textAlign = TextAlign.Center,
+                fontSize = 13.sp
+            )
+            Spacer(
+                modifier = Modifier
+                    .width(2.5.dp)
+                    .height(35.dp)
+                    .background(Color(0xff345BC0))
+            )
+            var textPw by viewModel.accountPw
+            BasicTextField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .weight(7f)
+                    .padding(start = 10.dp),
+                value = textPw,
+                onValueChange = {newText ->
+                    textPw = newText},
+                singleLine = true,
+                visualTransformation = PasswordVisualTransformation(),
+                keyboardOptions = KeyboardOptions(
+                    keyboardType = KeyboardType.Password
+                )
+            )
+        }
+    }
+    Spacer(modifier = Modifier.height(7.dp))
+}
+
+@Composable
+private fun ColumnScope.LoginButton(){
+    Button(
+        modifier = Modifier
+            .width(350.dp),
+        colors = ButtonDefaults.buttonColors(Color(0xff345BC0)),
+        shape = RoundedCornerShape(30),
+        onClick = { /*TODO*/ }
+    ) {
+        Text(modifier = Modifier.padding(top = 5.dp, bottom = 5.dp),
+            color = Color.White,
+            text = "로그인")
+    }
+    Spacer(modifier = Modifier.height(10.dp))
+}
+
+@Composable
+private fun ColumnScope.FindIdPw(){
+    ClickableText(
+        text = AnnotatedString("아이디/비밀번호 찾기"),
+        style = TextStyle(textDecoration = TextDecoration.Underline),
+        onClick ={}
+    )
+    Spacer(modifier = Modifier.height(20.dp))
+}
 
 @Preview
 @Composable

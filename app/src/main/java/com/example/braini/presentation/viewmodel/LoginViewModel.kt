@@ -20,8 +20,8 @@ class LoginViewModel @Inject constructor(
 ): ViewModel(), ILoginViewModel {
     private val _account = mutableStateOf(accountManager.currentAccount)
     val account: State<Account> get() = _account
-    override var accountId: MutableState<String> = mutableStateOf("anything")
-    override var accountPw: MutableState<String> = mutableStateOf("something")
+    override var accountId: MutableState<String> = mutableStateOf("")
+    override var accountPw: MutableState<String> = mutableStateOf("")
 
     override fun isLoggedIn(): Boolean = accountManager.isLoggedIn()
 

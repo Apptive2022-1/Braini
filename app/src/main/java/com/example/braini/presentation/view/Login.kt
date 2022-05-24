@@ -121,7 +121,7 @@ public fun ColumnScope.Description(){
         Column(modifier = Modifier.padding(top = 60.dp))
         {
             Text(
-                "'Braini'는",
+                text = stringResource(R.string.login_screen_main_1),
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(start = 30.dp,),
@@ -134,7 +134,7 @@ public fun ColumnScope.Description(){
                     .padding(start = 30.dp,),
                 color = Color.Black,
                 fontSize = 23.sp,
-                text = "여러분의 아이디어를 응원합니다"
+                text = stringResource(R.string.login_screen_main_2)
             )
 
         }
@@ -247,7 +247,7 @@ private fun ColumnScope.ModalSheetTopHandle(){
 
 @Composable
 private fun ColumnScope.SocialLoginText(){
-    Text(text = "SNS 계정으로 로그인",
+    Text(text = stringResource(R.string.modal_sns_text),
         fontSize = 13.sp)
     Spacer(modifier = Modifier.height(20.dp))
 }
@@ -256,7 +256,7 @@ private fun ColumnScope.SocialLoginText(){
 private fun ColumnScope.OrText(){
     Text(
         modifier = Modifier.padding(top = 10.dp, bottom = 10.dp),
-        text = "또는",
+        text = stringResource(R.string.modal_or),
         fontSize = 13.sp
     )
 }
@@ -293,7 +293,7 @@ private fun SocialLoginButton(
 private fun ColumnScope.SocialLoginButtons() {
     SocialLoginButton(
         icon = R.drawable.kakao,
-        text = "카카오톡으로 시작하기",
+        text = stringResource(R.string.modal_kakao_btn),
         onClick = {},
         color = Color(0xfffbe300),
         borderDp = 0.dp,
@@ -303,7 +303,7 @@ private fun ColumnScope.SocialLoginButtons() {
     Spacer(modifier = Modifier.height(8.dp))
     SocialLoginButton(
         icon = R.drawable.google,
-        text = "구글로 시작하기",
+        text = stringResource(R.string.modal_google_btn),
         onClick = {},
         color = Color.White,
         borderDp = 1.dp,
@@ -336,7 +336,7 @@ private fun ColumnScope.IdTextField(
         ) {
             Text(
                 modifier = Modifier.weight(2f),
-                text = "아이디",
+                text = stringResource(R.string.modal_textfileld_id),
                 textAlign = TextAlign.Center,
                 fontSize = 13.sp
             )
@@ -388,7 +388,7 @@ private fun ColumnScope.PwTextField(
         ) {
             Text(
                 modifier = Modifier.weight(2f),
-                text = "비밀번호",
+                text = stringResource(R.string.modal_textfield_pw),
                 textAlign = TextAlign.Center,
                 fontSize = 13.sp
             )
@@ -429,7 +429,7 @@ private fun ColumnScope.LoginButton(){
     ) {
         Text(modifier = Modifier.padding(top = 5.dp, bottom = 5.dp),
             color = Color.White,
-            text = "로그인")
+            text = stringResource(R.string.modal_login_btn))
     }
     Spacer(modifier = Modifier.height(10.dp))
 }
@@ -437,7 +437,7 @@ private fun ColumnScope.LoginButton(){
 @Composable
 private fun ColumnScope.FindIdPw(){
     ClickableText(
-        text = AnnotatedString("아이디/비밀번호 찾기"),
+        text = AnnotatedString(text = stringResource(R.string.modal_find_idpw)),
         style = TextStyle(textDecoration = TextDecoration.Underline),
         onClick ={}
     )

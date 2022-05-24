@@ -1,37 +1,31 @@
 package com.apptive.braini.presentation.view
 
-import android.content.res.ColorStateList
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.Card
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.view.ViewCompat.setElevation
 import com.apptive.braini.ui.theme.LayoutPracticeTheme
-import com.apptive.braini.presentation.view.*
 
 
 @Composable
 fun RoomCreateScreen() {
     RoomCreateContent {
         Logo()
-        guideSentense()
-        createBox()
-        pastRecord()
+        GuideSentense()
+        CreateBox()
+        PastRecord()
     }
 }
 @Composable
@@ -59,7 +53,7 @@ private fun Logo(){
 }
 
 @Composable
-private fun guideSentense(
+private fun GuideSentense(
     modifier: Modifier = Modifier
 ){
     Text(
@@ -79,7 +73,7 @@ private fun guideSentense(
 }
 
 @Composable
-private fun createBox(){
+private fun CreateBox(){
     Surface(
         shape = RoundedCornerShape(20),
         elevation = 10.dp
@@ -100,14 +94,14 @@ private fun createBox(){
                 .padding(top = 15.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ){
-            codeBox()
+            CodeBox()
         }
     }
     Spacer(modifier = Modifier.height(92.dp))
 }
 
 @Composable
-private fun codeBox(){
+private fun CodeBox(){
     Box(
         modifier = Modifier
             .width(285.dp)
@@ -147,7 +141,7 @@ private fun codeBox(){
 }
 
 @Composable
-private fun pastRecord(){
+private fun PastRecord(){
     Text(
         modifier = Modifier.fillMaxWidth(),
         text = "과거 브레인스토밍",
@@ -157,25 +151,25 @@ private fun pastRecord(){
     Spacer(modifier = Modifier.height(8.dp))
     Column{
         Row {
-            pastRecordBox()
+            PastRecordBox()
             Spacer(modifier = Modifier.width(13.dp))
-            pastRecordBox()
+            PastRecordBox()
             Spacer(modifier = Modifier.width(13.dp))
-            pastRecordBox()
+            PastRecordBox()
         }
         Spacer(modifier = Modifier.height(13.dp))
         Row{
-            pastRecordBox()
+            PastRecordBox()
             Spacer(modifier = Modifier.width(13.dp))
-            pastRecordBox()
+            PastRecordBox()
             Spacer(modifier = Modifier.width(13.dp))
-            pastRecordBox()
+            PastRecordBox()
         }
     }
 }
 
 @Composable
-private fun pastRecordBox(){
+private fun PastRecordBox(){
     Surface(
         shape = RoundedCornerShape(20),
         elevation = 10.dp

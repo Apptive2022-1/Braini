@@ -1,7 +1,17 @@
 <resources>
     <string name="app_name">Braini</string>
+    <string name="login_screen_main_1">"'Braini'는"</string>
+    <string name="login_screen_main_2">여러분의 아이디어를 응원합니다</string>
+    <string name="modal_sns_text">SNS 계정으로 로그인</string>
+    <string name="modal_or">또는</string>
+    <string name="modal_kakao_btn">카카오톡으로 시작하기</string>
+    <string name="modal_google_btn">구글로 시작하기</string>
+    <string name="modal_textfileld_id">아이디</string>
+    <string name="modal_textfield_pw">비밀번호</string>
+    <string name="modal_login_btn">로그인</string>
     <string name="login_button">로 그 인</string>
     <string name="new_user_button">회 원 가 입</string>
+    <string name="modal_find_idpw">아이디/비밀번호 찾기</string>
     <string name="client_id_android">340359310267-mlvj58fv4ucoqk8imoeu8hmc9do37u0u.apps.googleusercontent.com</string>
     <string name="client_id_server">340359310267-mlvj58fv4ucoqk8imoeu8hmc9do37u0u.apps.googleusercontent.com</string>
     <string name="kakao_native_app_key">83dd8f2165af788733c509a0deab29f9</string>

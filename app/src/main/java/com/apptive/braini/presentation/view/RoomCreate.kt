@@ -6,6 +6,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.apptive.braini.presentation.view.RoomCreate.CreateBox
 import com.apptive.braini.presentation.view.RoomCreate.Header
 import com.apptive.braini.presentation.view.RoomCreate.PastRecord
@@ -13,10 +15,10 @@ import com.apptive.braini.ui.theme.LayoutPracticeTheme
 
 
 @Composable
-fun RoomCreateScreen() {
+fun RoomCreateScreen(navController: NavController) {
     RoomCreateContent {
         Header()
-        CreateBox()
+        CreateBox(navController)
         PastRecord()
     }
 }
@@ -39,6 +41,6 @@ private fun RoomCreateContent(
 @Composable
 private fun RoomCreateScreenPreview() {
     LayoutPracticeTheme() {
-        RoomCreateScreen()
+        RoomCreateScreen(rememberNavController())
     }
 }

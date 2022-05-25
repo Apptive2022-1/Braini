@@ -348,7 +348,7 @@ private fun ModalBottomSheet(
                             .width(350.dp),
                         colors = ButtonDefaults.buttonColors(Color(0xff345BC0)),
                         shape = RoundedCornerShape(30),
-                        onClick = { /*TODO*/ }
+                        onClick = { navController.popNavigate(Screen.RoomCreate.route) }
                     ) {
                         Text(modifier = Modifier.padding(top = 5.dp, bottom = 5.dp),
                             color = Color.White,

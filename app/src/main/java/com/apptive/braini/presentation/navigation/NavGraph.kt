@@ -29,7 +29,7 @@ fun SetupNavGraph(navController: NavHostController){
             RoomSelectScreen()
         }
         composable(route = Screen.RoomCreate.route) {
-            RoomCreateScreen()
+            RoomCreateScreen(navController)
         }
     }
 }

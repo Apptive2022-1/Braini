@@ -21,22 +21,26 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.apptive.braini.ui.theme.Blue500
 import com.apptive.braini.ui.theme.Blue700
 import com.apptive.braini.ui.theme.Blue800
 import com.apptive.braini.ui.theme.LayoutPracticeTheme
 import com.apptive.braini._enums.Side
+import com.apptive.braini.presentation.viewmodel.RoomSelectViewModel
 
 @Composable
-fun RoomSelectScreen() {
+fun RoomSelectScreen(
+    roomSelectViewMode: RoomSelectViewModel = viewModel()
+) {
     RoomSelectContent(){
         Title()
-        RoomName()
-        Number()
+        RoomName(roomSelectViewMode)
+        Number(roomSelectViewMode)
         Date()
         Time()
-        Calling()
-        Lock()
+        Calling(roomSelectViewMode)
+        Lock(roomSelectViewMode)
     }
 }
 
@@ -133,7 +137,7 @@ private fun BrainiDividedButton(
     leftOnClick: () -> Unit = {},
     rightOnClick: () -> Unit = {},
     selected: Side = Side.LEFT
-    ){
+){
     Row(){
         BrainiButton(
             modifier = modifier.width(151.dp),
@@ -165,20 +169,43 @@ private fun BrainiDividedButton(
 }
 
 @Composable
-private fun Title(){
-        Text(
-            text = "방 옵션 선택",
-            color = Color.Black,
-            fontSize = 28.sp,
-            fontWeight = FontWeight.SemiBold
-        )
-
-        Spacer(modifier = Modifier.height(39.dp))
-    }
+private fun BrainiCompleteButton(
+    viewModel: RoomSelectViewModel,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit = {},
+    content: @Composable BoxScope.()->Unit = {}
+){
+    viewModel.isFilled
+    Box(modifier = modifier
+        .fillMaxWidth()
+        .height(36.dp)
+        .clip(RoundedCornerShape(40))
+        .background(color = Color.White)
+        .border(width = 1.dp, shape = RoundedCornerShape(40), color = Blue800)
+        .clickable { onClick() },
+        content = content,
+        contentAlignment = Alignment.Center
+    )
+}
 
 @Composable
-private fun RoomName(){
-    var text by remember{ mutableStateOf("")}
+private fun Title(){
+    Text(
+        text = "방 옵션 선택",
+        color = Color.Black,
+        fontSize = 28.sp,
+        fontWeight = FontWeight.SemiBold
+    )
+
+    Spacer(modifier = Modifier.height(39.dp))
+}
+
+@Composable
+private fun RoomName(
+    roomSelectViewMode: RoomSelectViewModel
+){
+    var text = roomSelectViewMode.roomTitle
+
     Text(
         text = "프로젝트명",
         color = Color.Black,
@@ -187,21 +214,23 @@ private fun RoomName(){
         modifier = Modifier.padding(end = 240.dp)
     )
 
-    BrainiTextButton(){
+    BrainiTextButton{
         BasicTextField(
-            value = text,
+            value = text.value,
             onValueChange = { newText ->
-            text = newText},
-            singleLine = true
-        )
+                text.value = newText
+            },
+            singleLine = true)
     }
 
     Spacer(modifier = Modifier.height(40.dp))
 }
 
 @Composable
-private fun Number() {
-    var text by remember{ mutableStateOf("")}
+private fun Number(
+    roomSelectViewMode: RoomSelectViewModel
+) {
+    var text = roomSelectViewMode.roomNumber
     Text(
         text = "참여인원",
         color = Color.Black,
@@ -211,11 +240,11 @@ private fun Number() {
     )
     BrainiTextButton(){
         BasicTextField(
-            value = text,
+            value = text.value.toString(),
             onValueChange = { newText ->
-                text = newText},
-            singleLine = true
-        )
+                text.value = newText.toInt()
+            },
+            singleLine = true)
     }
     Spacer(modifier = Modifier.height(40.dp))
 }
@@ -251,8 +280,10 @@ private fun Time(){
 }
 
 @Composable
-private fun Calling(){
-    var selected: Side by remember { mutableStateOf(Side.LEFT) }
+private fun Calling(
+    roomSelectViewMode: RoomSelectViewModel
+){
+    var selected = roomSelectViewMode.callable
 
     Text(
         text = "음성 통화",
@@ -264,16 +295,18 @@ private fun Calling(){
     BrainiDividedButton(
         leftText = "사용 O",
         rightText = "사용 X",
-        selected = selected,
-        leftOnClick = { selected = Side.LEFT },
-        rightOnClick = { selected = Side.RIGHT }
+        selected = selected.value,
+        leftOnClick = { selected.value = Side.LEFT },
+        rightOnClick = { selected.value = Side.RIGHT }
     )
     Spacer(modifier = Modifier.height(41.dp))
 }
 
 @Composable
-private fun Lock(){
-    var selected: Side by remember { mutableStateOf(Side.LEFT) }
+private fun Lock(
+    roomSelectViewMode: RoomSelectViewModel
+){
+    var selected = roomSelectViewMode.isPublic
 
     Text(
         text = "공개 여부",
@@ -285,9 +318,9 @@ private fun Lock(){
     BrainiDividedButton(
         leftText = "사용 O",
         rightText = "사용 X",
-        selected = selected,
-        leftOnClick = { selected = Side.LEFT },
-        rightOnClick = { selected = Side.RIGHT }
+        selected = selected.value,
+        leftOnClick = { selected.value = Side.LEFT },
+        rightOnClick = { selected.value = Side.RIGHT }
     )
 }
 
@@ -295,8 +328,6 @@ private fun Lock(){
 @Preview(showSystemUi = true)
 @Composable
 private fun RoomSelectScreenPreview() {
-    LayoutPracticeTheme() {
-        
-    }
+    LayoutPracticeTheme() {}
     RoomSelectScreen()
 }

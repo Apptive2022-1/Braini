@@ -20,8 +20,8 @@ import com.apptive.braini.ui.theme.LayoutPracticeTheme
 
 
 @Composable
-fun RoomCreateScreen() {
-    RoomCreateContent {
+fun MainScreen() {
+    MainContent {
         Logo()
         GuideSentense()
         CreateBox()
@@ -29,7 +29,7 @@ fun RoomCreateScreen() {
     }
 }
 @Composable
-private fun RoomCreateContent(
+private fun MainContent(
     content: @Composable() (ColumnScope.() -> Unit)
 ) {
     Column(
@@ -189,5 +189,5 @@ private fun RoomCreateScreenPreview() {
     LayoutPracticeTheme() {
 
     }
-    RoomCreateScreen()
+    MainScreen()
 }

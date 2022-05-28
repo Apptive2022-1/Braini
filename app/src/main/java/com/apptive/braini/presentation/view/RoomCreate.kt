@@ -6,10 +6,8 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
-import androidx.compose.material.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -24,31 +22,29 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.apptive.braini.ui.theme.Blue500
-import com.apptive.braini.ui.theme.Blue700
 import com.apptive.braini.ui.theme.Blue800
 import com.apptive.braini.ui.theme.LayoutPracticeTheme
 import com.apptive.braini._enums.Side
-import com.apptive.braini.presentation.viewmodel.RoomSelectViewModel
+import com.apptive.braini.presentation.viewmodel.RoomCreateViewModel
 
 @Composable
-fun RoomSelectScreen(
-    roomSelectViewMode: RoomSelectViewModel = viewModel()
+fun RoomCreateScreen(
+    roomCreateViewMode: RoomCreateViewModel = viewModel()
 ) {
-    RoomSelectContent(){
+    RoomCreateContent(){
         Title()
-        RoomName(roomSelectViewMode)
-        Number(roomSelectViewMode)
+        RoomName(roomCreateViewMode)
+        Number(roomCreateViewMode)
         Date()
         Time()
-        Calling(roomSelectViewMode)
-        Lock(roomSelectViewMode)
-        BrainiCompleteButton(roomSelectViewMode)
+        Calling(roomCreateViewMode)
+        Lock(roomCreateViewMode)
+        BrainiCompleteButton(roomCreateViewMode)
     }
 }
 
 @Composable
-private fun RoomSelectContent(
+private fun RoomCreateContent(
     content: @Composable() (ColumnScope.() -> Unit)
 ) {
     Column(
@@ -173,7 +169,7 @@ private fun BrainiDividedButton(
 
 @Composable
 private fun BrainiCompleteButton(
-    viewModel: RoomSelectViewModel,
+    viewModel: RoomCreateViewModel,
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {},
     content: @Composable BoxScope.()->Unit = {}
@@ -210,7 +206,7 @@ private fun Title(){
 
 @Composable
 private fun RoomName(
-    roomSelectViewMode: RoomSelectViewModel
+    roomSelectViewMode: RoomCreateViewModel
 ){
     val text = roomSelectViewMode.roomTitle
 
@@ -236,7 +232,7 @@ private fun RoomName(
 
 @Composable
 private fun Number(
-    roomSelectViewMode: RoomSelectViewModel
+    roomSelectViewMode: RoomCreateViewModel
 ) {
     var text = roomSelectViewMode.roomNumber
     Text(
@@ -291,7 +287,7 @@ private fun Time(){
 
 @Composable
 private fun Calling(
-    roomSelectViewMode: RoomSelectViewModel
+    roomSelectViewMode: RoomCreateViewModel
 ){
     var selected = roomSelectViewMode.callable
 
@@ -314,7 +310,7 @@ private fun Calling(
 
 @Composable
 private fun Lock(
-    roomSelectViewMode: RoomSelectViewModel
+    roomSelectViewMode: RoomCreateViewModel
 ){
     var selected = roomSelectViewMode.isPublic
 
@@ -340,5 +336,5 @@ private fun Lock(
 @Composable
 private fun RoomSelectScreenPreview() {
     LayoutPracticeTheme() {}
-    RoomSelectScreen()
+    RoomCreateScreen()
 }

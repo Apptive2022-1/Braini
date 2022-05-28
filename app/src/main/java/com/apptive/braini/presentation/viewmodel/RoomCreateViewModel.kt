@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import com.apptive.braini._enums.Side
 
-class RoomSelectViewModel : ViewModel() {
+class RoomCreateViewModel : ViewModel() {
     var roomTitle: MutableState<String> = mutableStateOf("프로젝트명을 입력하세요")
     var roomNumber: MutableState<Int> = mutableStateOf(0)
     var callable: MutableState<Side> = mutableStateOf(Side.LEFT)

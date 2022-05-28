@@ -10,6 +10,7 @@ import com.apptive.braini.presentation.view.RoomCreateScreen
 import com.apptive.braini.presentation.view.MainScreen
 import com.apptive.braini.presentation.view.SplashScreen
 import com.apptive.braini.presentation.viewmodel.LoginViewModel
+import com.apptive.braini.presentation.viewmodel.RoomCreateViewModel
 
 @Composable
 fun SetupNavGraph(navController: NavHostController){
@@ -25,10 +26,11 @@ fun SetupNavGraph(navController: NavHostController){
             val viewModel = hiltViewModel<LoginViewModel>()
             LoginScreen(viewModel, navController)
         }
-        composable(route = Screen.RoomSelect.route) {
-            RoomCreateScreen()
-        }
         composable(route = Screen.RoomCreate.route) {
+            val viewModel = hiltViewModel<RoomCreateViewModel>()
+            RoomCreateScreen(viewModel)
+        }
+        composable(route = Screen.Main.route) {
             MainScreen()
         }
     }

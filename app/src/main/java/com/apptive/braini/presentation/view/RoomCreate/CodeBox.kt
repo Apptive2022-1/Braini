@@ -41,7 +41,7 @@ fun ColumnScope.CreateBox(navController: NavController){
                 )
                 .padding(top = 15.dp)
                 .clickable {
-                    navController.navigate(Screen.RoomSelect.route)
+                    navController.navigate(Screen.RoomCreate.route)
                 },
             horizontalAlignment = Alignment.CenterHorizontally
         ){

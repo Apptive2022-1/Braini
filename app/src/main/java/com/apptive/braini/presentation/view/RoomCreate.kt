@@ -21,17 +21,17 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.apptive.braini.ui.theme.Blue800
 import com.apptive.braini.ui.theme.LayoutPracticeTheme
 import com.apptive.braini._enums.Side
-import com.apptive.braini.presentation.viewmodel.RoomCreateViewModel
+import com.apptive.braini.presentation.viewmodel.interfaces.IRoomCreateViewModel
+import com.apptive.braini.presentation.viewmodel.mock.RoomCreateViewModelMock
 
 @Composable
 fun RoomCreateScreen(
-    roomCreateViewMode: RoomCreateViewModel = viewModel()
+    roomCreateViewMode: IRoomCreateViewModel = RoomCreateViewModelMock()
 ) {
-    RoomCreateContent(){
+    RoomCreateContent {
         Title()
         RoomName(roomCreateViewMode)
         Number(roomCreateViewMode)
@@ -169,7 +169,7 @@ private fun BrainiDividedButton(
 
 @Composable
 private fun BrainiCompleteButton(
-    viewModel: RoomCreateViewModel,
+    viewModel: IRoomCreateViewModel,
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {},
     content: @Composable BoxScope.()->Unit = {}
@@ -206,7 +206,7 @@ private fun Title(){
 
 @Composable
 private fun RoomName(
-    roomSelectViewMode: RoomCreateViewModel
+    roomSelectViewMode: IRoomCreateViewModel
 ){
     val text = roomSelectViewMode.roomTitle
 
@@ -232,7 +232,7 @@ private fun RoomName(
 
 @Composable
 private fun Number(
-    roomSelectViewMode: RoomCreateViewModel
+    roomSelectViewMode: IRoomCreateViewModel
 ) {
     var text = roomSelectViewMode.roomNumber
     Text(
@@ -287,7 +287,7 @@ private fun Time(){
 
 @Composable
 private fun Calling(
-    roomSelectViewMode: RoomCreateViewModel
+    roomSelectViewMode: IRoomCreateViewModel
 ){
     var selected = roomSelectViewMode.callable
 
@@ -310,7 +310,7 @@ private fun Calling(
 
 @Composable
 private fun Lock(
-    roomSelectViewMode: RoomCreateViewModel
+    roomSelectViewMode: IRoomCreateViewModel
 ){
     var selected = roomSelectViewMode.isPublic
 
@@ -328,13 +328,12 @@ private fun Lock(
         leftOnClick = { selected.value = Side.LEFT },
         rightOnClick = { selected.value = Side.RIGHT }
     )
-    Spacer(modifier = Modifier.height(40.dp))
 }
 
 
 @Preview(showSystemUi = true)
 @Composable
-private fun RoomSelectScreenPreview() {
+private fun RoomCreateScreenPreview() {
     LayoutPracticeTheme() {}
     RoomCreateScreen()
 }

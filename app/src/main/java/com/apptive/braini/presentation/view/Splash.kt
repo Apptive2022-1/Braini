@@ -11,7 +11,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.apptive.braini.R
@@ -38,7 +37,7 @@ fun SplashScreen(
         delay(4000)
         navController.popBackStack()
 
-        if (viewModel.isLoggedIn()) navController.navigate(Screen.RoomCreate.route)
+        if (viewModel.isLoggedIn()) navController.navigate(Screen.Main.route)
         else                        navController.navigate(Screen.Login.route)
     }
 

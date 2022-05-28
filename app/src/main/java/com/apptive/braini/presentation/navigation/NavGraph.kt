@@ -6,10 +6,11 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.apptive.braini.presentation.view.LoginScreen
-import com.apptive.braini.presentation.view.RoomSelectScreen
 import com.apptive.braini.presentation.view.RoomCreateScreen
+import com.apptive.braini.presentation.view.MainScreen
 import com.apptive.braini.presentation.view.SplashScreen
 import com.apptive.braini.presentation.viewmodel.LoginViewModel
+import com.apptive.braini.presentation.viewmodel.RoomCreateViewModel
 
 @Composable
 fun SetupNavGraph(navController: NavHostController){
@@ -25,11 +26,12 @@ fun SetupNavGraph(navController: NavHostController){
             val viewModel = hiltViewModel<LoginViewModel>()
             LoginScreen(viewModel, navController)
         }
-        composable(route = Screen.RoomSelect.route) {
-            RoomSelectScreen()
-        }
         composable(route = Screen.RoomCreate.route) {
-            RoomCreateScreen(navController)
+            val viewModel = hiltViewModel<RoomCreateViewModel>()
+            RoomCreateScreen(viewModel)
+        }
+        composable(route = Screen.Main.route) {
+            MainScreen()
         }
     }
 }

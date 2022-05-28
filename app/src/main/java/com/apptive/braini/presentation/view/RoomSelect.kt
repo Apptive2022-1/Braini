@@ -17,7 +17,9 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -41,6 +43,7 @@ fun RoomSelectScreen(
         Time()
         Calling(roomSelectViewMode)
         Lock(roomSelectViewMode)
+        BrainiCompleteButton(roomSelectViewMode)
     }
 }
 
@@ -175,17 +178,22 @@ private fun BrainiCompleteButton(
     onClick: () -> Unit = {},
     content: @Composable BoxScope.()->Unit = {}
 ){
-    viewModel.isFilled
     Box(modifier = modifier
         .fillMaxWidth()
         .height(36.dp)
         .clip(RoundedCornerShape(40))
         .background(color = Color.White)
-        .border(width = 1.dp, shape = RoundedCornerShape(40), color = Blue800)
-        .clickable { onClick() },
-        content = content,
+        .border(width = 1.dp, shape = RoundedCornerShape(40), color = Blue800),
         contentAlignment = Alignment.Center
-    )
+    ) {
+        TextButton(
+            modifier = Modifier.fillMaxSize(),
+            onClick = onClick,
+            enabled = viewModel.isFilled
+        ) {
+            Text(text = "완료")
+        }
+    }
 }
 
 @Composable
@@ -204,7 +212,7 @@ private fun Title(){
 private fun RoomName(
     roomSelectViewMode: RoomSelectViewModel
 ){
-    var text = roomSelectViewMode.roomTitle
+    val text = roomSelectViewMode.roomTitle
 
     Text(
         text = "프로젝트명",
@@ -223,7 +231,7 @@ private fun RoomName(
             singleLine = true)
     }
 
-    Spacer(modifier = Modifier.height(40.dp))
+    Spacer(modifier = Modifier.height(34.dp))
 }
 
 @Composable
@@ -238,15 +246,17 @@ private fun Number(
         fontWeight = FontWeight.SemiBold,
         modifier = Modifier.padding(end = 250.dp)
     )
-    BrainiTextButton(){
+    BrainiTextButton{
         BasicTextField(
             value = text.value.toString(),
             onValueChange = { newText ->
                 text.value = newText.toInt()
             },
-            singleLine = true)
+            singleLine = true,
+            textStyle = TextStyle(textAlign = TextAlign.Center)
+        )
     }
-    Spacer(modifier = Modifier.height(40.dp))
+    Spacer(modifier = Modifier.height(34.dp))
 }
 
 @Composable
@@ -261,7 +271,7 @@ private fun Date(){
 
     BrainiDragButton()
 
-    Spacer(modifier = Modifier.height(37.dp))
+    Spacer(modifier = Modifier.height(34.dp))
 }
 
 @Composable
@@ -276,7 +286,7 @@ private fun Time(){
 
     BrainiDragButton()
 
-    Spacer(modifier = Modifier.height(37.dp))
+    Spacer(modifier = Modifier.height(34.dp))
 }
 
 @Composable
@@ -299,7 +309,7 @@ private fun Calling(
         leftOnClick = { selected.value = Side.LEFT },
         rightOnClick = { selected.value = Side.RIGHT }
     )
-    Spacer(modifier = Modifier.height(41.dp))
+    Spacer(modifier = Modifier.height(34.dp))
 }
 
 @Composable
@@ -322,6 +332,7 @@ private fun Lock(
         leftOnClick = { selected.value = Side.LEFT },
         rightOnClick = { selected.value = Side.RIGHT }
     )
+    Spacer(modifier = Modifier.height(40.dp))
 }
 
 

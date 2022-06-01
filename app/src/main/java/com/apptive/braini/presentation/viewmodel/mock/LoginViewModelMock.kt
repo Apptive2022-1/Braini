@@ -17,15 +17,15 @@ class LoginViewModelMock: ILoginViewModel {
     }
 
     override fun loginWithKakao(context: Context, navigate: () -> Unit) {
-        TODO("Not yet implemented")
+        //TODO("Not yet implemented")
     }
 
     override fun googleResultListener(result: ActivityResult, navigate: () -> Unit) {
-        TODO("Not yet implemented")
+        //TODO("Not yet implemented")
     }
 
     override fun googleSignIn(launcher: IntentSenderLauncher) {
-        TODO("Not yet implemented")
+        //TODO("Not yet implemented")
     }
 
 }

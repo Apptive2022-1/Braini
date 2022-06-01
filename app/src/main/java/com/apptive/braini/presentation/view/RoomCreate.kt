@@ -1,13 +1,11 @@
 package com.apptive.braini.presentation.view
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
-import androidx.compose.material.Text
-import androidx.compose.material.TextButton
+import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,25 +19,54 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.apptive.braini.ui.theme.Blue800
 import com.apptive.braini.ui.theme.LayoutPracticeTheme
 import com.apptive.braini._enums.Side
+import com.apptive.braini.presentation.viewmodel.interfaces.ILoginViewModel
 import com.apptive.braini.presentation.viewmodel.interfaces.IRoomCreateViewModel
 import com.apptive.braini.presentation.viewmodel.mock.RoomCreateViewModelMock
+import androidx.compose.foundation.layout.Row
+import androidx.compose.material.LocalTextStyle
+import androidx.compose.material.MaterialTheme
+import androidx.compose.runtime.Composable
+import com.apptive.braini.presentation.height
+import com.apptive.braini.presentation.utils.ScreenUtils
+import com.apptive.braini.presentation.viewmodel.RoomCreateViewModel
+import com.chargemap.compose.numberpicker.AMPMHours
+import com.chargemap.compose.numberpicker.Hours
+import com.chargemap.compose.numberpicker.HoursNumberPicker
+import com.chargemap.compose.numberpicker.NumberPicker
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlin.math.abs
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun RoomCreateScreen(
     roomCreateViewMode: IRoomCreateViewModel = RoomCreateViewModelMock()
 ) {
-    RoomCreateContent {
-        Title()
-        RoomName(roomCreateViewMode)
-        Number(roomCreateViewMode)
-        Date()
-        Time()
-        Calling(roomCreateViewMode)
-        Lock(roomCreateViewMode)
-        BrainiCompleteButton(roomCreateViewMode)
+    val sheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
+
+    // Trailing Lambda
+    TimePickerBottomSheet(
+        viewModel = roomCreateViewMode,
+        sheetState = sheetState
+    ){
+        RoomCreateContent {
+            Title()
+            RoomName(roomCreateViewMode)
+            Number(roomCreateViewMode)
+            Date()
+            Time(
+                sheetState = sheetState,
+                viewModel = roomCreateViewMode
+            )
+            Calling(roomCreateViewMode)
+            Lock(roomCreateViewMode)
+            BrainiCompleteButton(roomCreateViewMode)
+        }
     }
 }
 
@@ -50,8 +77,9 @@ private fun RoomCreateContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 38.dp, vertical = 75.dp)
-            .wrapContentSize(Alignment.Center),
+            .padding(horizontal = 26.dp, vertical = 42.dp)
+            .wrapContentSize(Alignment.Center)
+            .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
         content = content
     )
@@ -201,7 +229,7 @@ private fun Title(){
         fontWeight = FontWeight.SemiBold
     )
 
-    Spacer(modifier = Modifier.height(39.dp))
+    Spacer(modifier = Modifier.height(40.dp))
 }
 
 @Composable
@@ -270,8 +298,14 @@ private fun Date(){
     Spacer(modifier = Modifier.height(34.dp))
 }
 
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
-private fun Time(){
+private fun Time(
+    viewModel: IRoomCreateViewModel,
+    sheetState: ModalBottomSheetState
+){
+    val coroutineScope = rememberCoroutineScope()
+
     Text(
         text = "시작 시간",
         color = Color.Black,
@@ -280,7 +314,15 @@ private fun Time(){
         modifier = Modifier.padding(end = 250.dp)
     )
 
-    BrainiDragButton()
+    BrainiDragButton(
+        onClick = {
+            coroutineScope.launch {
+                sheetState.show()
+            }
+        },
+        content = {
+        }
+    )
 
     Spacer(modifier = Modifier.height(34.dp))
 }
@@ -299,8 +341,8 @@ private fun Calling(
         modifier = Modifier.padding(end = 250.dp)
     )
     BrainiDividedButton(
-        leftText = "사용 O",
-        rightText = "사용 X",
+        leftText = "O",
+        rightText = "X",
         selected = selected.value,
         leftOnClick = { selected.value = Side.LEFT },
         rightOnClick = { selected.value = Side.RIGHT }
@@ -322,11 +364,60 @@ private fun Lock(
         modifier = Modifier.padding(end = 250.dp)
     )
     BrainiDividedButton(
-        leftText = "사용 O",
-        rightText = "사용 X",
+        leftText = "O",
+        rightText = "X",
         selected = selected.value,
         leftOnClick = { selected.value = Side.LEFT },
         rightOnClick = { selected.value = Side.RIGHT }
+    )
+    Spacer(modifier = Modifier.height(40.dp))
+}
+
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+private fun TimePickerBottomSheet(
+    viewModel: IRoomCreateViewModel,
+    sheetState: ModalBottomSheetState,
+    content: @Composable () -> Unit
+){
+    ModalBottomSheetLayout(
+        sheetContent = {
+            Box(modifier = Modifier
+                .fillMaxWidth()
+                .height(50)
+                .background(Color.White),
+            contentAlignment = Alignment.Center){
+                var pickerValue by remember { mutableStateOf<Hours>(AMPMHours(9, 12, AMPMHours.DayTime.PM ))
+                }
+                HoursNumberPicker(
+                    dividersColor = Color.Transparent,
+                    value = pickerValue,
+                    onValueChange = { time ->
+                        pickerValue = time
+                        viewModel.hour.value = time.hours
+                        viewModel.minute.value = time.minutes
+                    },
+                    hoursDivider = {
+                        Text(
+                            modifier = Modifier.padding(horizontal = 8.dp),
+                            textAlign = TextAlign.Center,
+                            text = "시"
+                        )
+                    },
+                    minutesDivider = {
+                        Text(
+                            modifier = Modifier.padding(horizontal = 8.dp),
+                            textAlign = TextAlign.Center,
+                            text = "분"
+                        )
+                    }
+                )
+            }
+        },
+        sheetState = sheetState,
+        sheetBackgroundColor = Color.White,
+        sheetShape = RoundedCornerShape(topEnd = 30.dp, topStart = 30.dp),
+        content = content
     )
 }
 

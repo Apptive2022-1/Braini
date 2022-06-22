@@ -10,6 +10,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.apptive.braini.domain.log
 import com.apptive.braini.presentation.navigation.SetupNavGraph
+import com.apptive.braini.presentation.view.LoadingScreen
 import com.apptive.braini.ui.theme.LayoutPracticeTheme
 import com.kakao.sdk.common.util.Utility
 import dagger.hilt.android.AndroidEntryPoint
@@ -40,3 +41,4 @@ fun DefaultPreview() {
         Greeting("Android")
     }
 }
+

@@ -33,6 +33,7 @@ import androidx.compose.runtime.Composable
 import com.apptive.braini.presentation.height
 import com.apptive.braini.presentation.utils.ScreenUtils
 import com.apptive.braini.presentation.viewmodel.RoomCreateViewModel
+import com.apptive.braini.presentation.width
 import com.chargemap.compose.numberpicker.AMPMHours
 import com.chargemap.compose.numberpicker.Hours
 import com.chargemap.compose.numberpicker.HoursNumberPicker
@@ -58,7 +59,7 @@ fun RoomCreateScreen(
             Title()
             RoomName(roomCreateViewMode)
             Number(roomCreateViewMode)
-            Date()
+            Date(roomCreateViewMode)
             Time(
                 sheetState = sheetState,
                 viewModel = roomCreateViewMode
@@ -77,7 +78,9 @@ private fun RoomCreateContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 26.dp, vertical = 42.dp)
+            .width(86)
+            .height(84)
+//            .padding(horizontal = 26.dp, vertical = 42.dp)
             .wrapContentSize(Alignment.Center)
             .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -92,8 +95,8 @@ private fun BrainiTextButton(
     content: @Composable BoxScope.()->Unit = {}
 ){
     Box(modifier = modifier
-        .fillMaxWidth()
-        .height(36.dp)
+        .width(85)
+        .height(5)
         .clip(RoundedCornerShape(40))
         .background(
             brush = Brush.horizontalGradient(listOf(Color(188, 195, 254), Color(201, 228, 253)))
@@ -111,8 +114,8 @@ private fun BrainiDragButton(
     content: @Composable BoxScope.()->Unit = {}
 ){
     Box(modifier = modifier
-        .fillMaxWidth()
-        .height(36.dp)
+        .width(85)
+        .height(5)
         .clip(RoundedCornerShape(40))
         .background(
             brush = Brush.horizontalGradient(listOf(Color(188, 195, 254), Color(201, 228, 253)))
@@ -136,8 +139,8 @@ private fun BrainiButton(
     val border = if (selected) Blue800 else Color.White
 
     Box(modifier = modifier
-        .fillMaxWidth()
-        .height(36.dp)
+        .width(85)
+        .height(5)
         .clip(RoundedCornerShape(40))
         .background(
             brush = Brush.horizontalGradient(
@@ -167,7 +170,7 @@ private fun BrainiDividedButton(
 ){
     Row(){
         BrainiButton(
-            modifier = modifier.width(151.dp),
+            modifier = modifier.width(41),
             selected = (selected == Side.LEFT),
             onClick = leftOnClick
         )
@@ -179,10 +182,10 @@ private fun BrainiDividedButton(
             )
 
         }
-        Spacer(modifier = Modifier.width(13.dp))
+        Spacer(modifier = Modifier.width(3))
 
         BrainiButton(
-            modifier = modifier.width(151.dp),
+            modifier = modifier.width(41),
             selected = (selected == Side.RIGHT),
             onClick = rightOnClick
         ){
@@ -203,8 +206,8 @@ private fun BrainiCompleteButton(
     content: @Composable BoxScope.()->Unit = {}
 ){
     Box(modifier = modifier
-        .fillMaxWidth()
-        .height(36.dp)
+        .width(85)
+        .height(5)
         .clip(RoundedCornerShape(40))
         .background(color = Color.White)
         .border(width = 1.dp, shape = RoundedCornerShape(40), color = Blue800),
@@ -229,7 +232,7 @@ private fun Title(){
         fontWeight = FontWeight.SemiBold
     )
 
-    Spacer(modifier = Modifier.height(40.dp))
+    Spacer(modifier = Modifier.height(5))
 }
 
 @Composable
@@ -237,39 +240,44 @@ private fun RoomName(
     roomSelectViewMode: IRoomCreateViewModel
 ){
     val text = roomSelectViewMode.roomTitle
-
-    Text(
-        text = "프로젝트명",
-        color = Color.Black,
-        fontSize = 16.sp,
-        fontWeight = FontWeight.SemiBold,
-        modifier = Modifier.padding(end = 240.dp)
-    )
+    Row(){
+        Text(
+            text = "프로젝트명",
+            color = Color.Black,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.SemiBold
+        )
+        Spacer(modifier = Modifier.width(63))
+    }
 
     BrainiTextButton{
         BasicTextField(
             value = text.value,
             onValueChange = { newText ->
+                
                 text.value = newText
             },
             singleLine = true)
     }
 
-    Spacer(modifier = Modifier.height(34.dp))
+    Spacer(modifier = Modifier.height(4))
 }
 
 @Composable
 private fun Number(
-    roomSelectViewMode: IRoomCreateViewModel
+    roomCreateViewMode: IRoomCreateViewModel
 ) {
-    var text = roomSelectViewMode.roomNumber
-    Text(
-        text = "참여인원",
-        color = Color.Black,
-        fontSize = 16.sp,
-        fontWeight = FontWeight.SemiBold,
-        modifier = Modifier.padding(end = 250.dp)
-    )
+    var text = roomCreateViewMode.roomNumber
+    Row(){
+        Text(
+            text = "참여인원",
+            color = Color.Black,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.SemiBold
+        )
+        Spacer(modifier = Modifier.width(66))
+
+    }
     BrainiTextButton{
         BasicTextField(
             value = text.value.toString(),
@@ -280,51 +288,104 @@ private fun Number(
             textStyle = TextStyle(textAlign = TextAlign.Center)
         )
     }
-    Spacer(modifier = Modifier.height(34.dp))
+    Spacer(modifier = Modifier.height(4))
 }
 
+//@Composable
+//private fun Date(){
+//    Row(){
+//        Text(
+//            text = "시작 날짜",
+//            color = Color.Black,
+//            fontSize = 16.sp,
+//            fontWeight = FontWeight.SemiBold
+//        )
+//        Spacer(modifier = Modifier.width(66))
+//    }
+//
+//    BrainiDragButton()
+//
+//    Spacer(modifier = Modifier.height(4))
+//}
+
 @Composable
-private fun Date(){
-    Text(
-        text = "시작 날짜",
-        color = Color.Black,
-        fontSize = 16.sp,
-        fontWeight = FontWeight.SemiBold,
-        modifier = Modifier.padding(end = 250.dp)
-    )
+private fun Date(
+    roomCreateViewMode: IRoomCreateViewModel
+) {
+    var text = roomCreateViewMode.roomDate
+    Row(){
+        Text(
+            text = "시작 날짜",
+            color = Color.Black,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.SemiBold
+        )
+        Spacer(modifier = Modifier.width(66))
 
-    BrainiDragButton()
-
-    Spacer(modifier = Modifier.height(34.dp))
+    }
+    BrainiTextButton{
+        BasicTextField(
+            value = text.value.toString(),
+            onValueChange = { newText ->
+                text.value = newText.toInt()
+            },
+            singleLine = true,
+            textStyle = TextStyle(textAlign = TextAlign.Center)
+        )
+    }
+    Spacer(modifier = Modifier.height(4))
 }
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun Time(
+
     viewModel: IRoomCreateViewModel,
     sheetState: ModalBottomSheetState
 ){
+    val hour = viewModel.hour
+    val minute = viewModel.minute
+    val daytime = viewModel.AMPM
     val coroutineScope = rememberCoroutineScope()
+    var hourString = " 시   "
+    var minuteString = " 분   "
 
-    Text(
-        text = "시작 시간",
-        color = Color.Black,
-        fontSize = 16.sp,
-        fontWeight = FontWeight.SemiBold,
-        modifier = Modifier.padding(end = 250.dp)
-    )
+    Row(){
+        Text(
+            text = "시작 시간",
+            color = Color.Black,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.SemiBold
+        )
+        Spacer(modifier = Modifier.width(66))
+    }
 
     BrainiDragButton(
-        onClick = {
-            coroutineScope.launch {
-                sheetState.show()
-            }
-        },
         content = {
+            BasicTextField(
+                value = hour.value.toString() + hourString + minute.value.toString() + minuteString + daytime.value.toString(),
+                onValueChange = { newText ->
+                    hour.value = newText.toInt()
+                    minute.value = newText.toInt()
+                },
+                readOnly = true,
+                singleLine = true,
+                textStyle = TextStyle(textAlign = TextAlign.Center)
+            )
+
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clickable {
+                        coroutineScope.launch {
+                            sheetState.show()
+                        }
+                    },
+            ) {}
         }
     )
 
-    Spacer(modifier = Modifier.height(34.dp))
+    Spacer(modifier = Modifier.height(4))
 }
 
 @Composable
@@ -333,13 +394,16 @@ private fun Calling(
 ){
     var selected = roomSelectViewMode.callable
 
-    Text(
-        text = "음성 통화",
-        color = Color.Black,
-        fontSize = 16.sp,
-        fontWeight = FontWeight.SemiBold,
-        modifier = Modifier.padding(end = 250.dp)
-    )
+    Row(){
+        Text(
+            text = "음성 통화",
+            color = Color.Black,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.SemiBold
+        )
+        Spacer(modifier = Modifier.width(66))
+    }
+
     BrainiDividedButton(
         leftText = "O",
         rightText = "X",
@@ -347,7 +411,7 @@ private fun Calling(
         leftOnClick = { selected.value = Side.LEFT },
         rightOnClick = { selected.value = Side.RIGHT }
     )
-    Spacer(modifier = Modifier.height(34.dp))
+    Spacer(modifier = Modifier.height(4))
 }
 
 @Composable
@@ -356,13 +420,15 @@ private fun Lock(
 ){
     var selected = roomSelectViewMode.isPublic
 
-    Text(
-        text = "공개 여부",
-        color = Color.Black,
-        fontSize = 16.sp,
-        fontWeight = FontWeight.SemiBold,
-        modifier = Modifier.padding(end = 250.dp)
-    )
+    Row(){
+        Text(
+            text = "공개 여부",
+            color = Color.Black,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.SemiBold
+            )
+        Spacer(modifier = Modifier.width(66))
+    }
     BrainiDividedButton(
         leftText = "O",
         rightText = "X",
@@ -370,7 +436,7 @@ private fun Lock(
         leftOnClick = { selected.value = Side.LEFT },
         rightOnClick = { selected.value = Side.RIGHT }
     )
-    Spacer(modifier = Modifier.height(40.dp))
+    Spacer(modifier = Modifier.height(5))
 }
 
 @OptIn(ExperimentalMaterialApi::class)
@@ -383,8 +449,8 @@ private fun TimePickerBottomSheet(
     ModalBottomSheetLayout(
         sheetContent = {
             Box(modifier = Modifier
-                .fillMaxWidth()
-                .height(50)
+                .width(90)
+                .height(70)
                 .background(Color.White),
             contentAlignment = Alignment.Center){
                 var pickerValue by remember { mutableStateOf<Hours>(AMPMHours(9, 12, AMPMHours.DayTime.PM ))
@@ -393,9 +459,11 @@ private fun TimePickerBottomSheet(
                     dividersColor = Color.Transparent,
                     value = pickerValue,
                     onValueChange = { time ->
+                        val ampmHours = time as AMPMHours
                         pickerValue = time
                         viewModel.hour.value = time.hours
                         viewModel.minute.value = time.minutes
+                        viewModel.AMPM.value = ampmHours.dayTime
                     },
                     hoursDivider = {
                         Text(

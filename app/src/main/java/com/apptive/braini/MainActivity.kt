@@ -7,9 +7,13 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.rememberNavController
 import com.apptive.braini.domain.log
 import com.apptive.braini.presentation.navigation.SetupNavGraph
+import com.apptive.braini.presentation.view.Main.MemoTypeSelectScreen
+import com.apptive.braini.presentation.view.RoomCreateScreen
+import com.apptive.braini.presentation.viewmodel.RoomCreateViewModel
 import com.apptive.braini.ui.theme.LayoutPracticeTheme
 import com.kakao.sdk.common.util.Utility
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,8 +25,10 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             LayoutPracticeTheme {
-                val navController = rememberNavController()
-                SetupNavGraph(navController = navController)
+//                val navController = rememberNavController()
+////                SetupNavGraph(navController = navController)
+//                val viewModel = hiltViewModel<RoomCreateViewModel>()
+                MemoTypeSelectScreen()
             }
         }
     }

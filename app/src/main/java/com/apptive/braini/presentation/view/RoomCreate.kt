@@ -30,7 +30,9 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.material.LocalTextStyle
 import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.navigation.compose.rememberNavController
 import com.apptive.braini.presentation.height
+import com.apptive.braini.presentation.navigation.Screen
 import com.apptive.braini.presentation.utils.ScreenUtils
 import com.apptive.braini.presentation.viewmodel.RoomCreateViewModel
 import com.apptive.braini.presentation.width
@@ -46,12 +48,13 @@ import kotlin.math.abs
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun RoomCreateScreen(
-    roomCreateViewMode: IRoomCreateViewModel = RoomCreateViewModelMock()
+    roomCreateViewMode: IRoomCreateViewModel = RoomCreateViewModelMock(),
+    navController: NavController
 ) {
     val sheetState = rememberModalBottomSheetState(initialValue = ModalBottomSheetValue.Hidden)
 
     // Trailing Lambda
-    TimePickerBottomSheet(
+    datePickerBottomSheet(
         viewModel = roomCreateViewMode,
         sheetState = sheetState
     ){
@@ -59,14 +62,15 @@ fun RoomCreateScreen(
             Title()
             RoomName(roomCreateViewMode)
             Number(roomCreateViewMode)
-            Date(roomCreateViewMode)
+            Date( sheetState = sheetState,
+                viewModel = roomCreateViewMode)
             Time(
                 sheetState = sheetState,
                 viewModel = roomCreateViewMode
             )
             Calling(roomCreateViewMode)
             Lock(roomCreateViewMode)
-            BrainiCompleteButton(roomCreateViewMode)
+            BrainiCompleteButton(roomCreateViewMode, navController = navController)
         }
     }
 }
@@ -81,8 +85,8 @@ private fun RoomCreateContent(
             .width(86)
             .height(84)
 //            .padding(horizontal = 26.dp, vertical = 42.dp)
-            .wrapContentSize(Alignment.Center)
-            .verticalScroll(rememberScrollState()),
+            .wrapContentSize(Alignment.Center),
+//            .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
         content = content
     )
@@ -202,7 +206,7 @@ private fun BrainiDividedButton(
 private fun BrainiCompleteButton(
     viewModel: IRoomCreateViewModel,
     modifier: Modifier = Modifier,
-    onClick: () -> Unit = {},
+    navController: NavController,
     content: @Composable BoxScope.()->Unit = {}
 ){
     Box(modifier = modifier
@@ -215,10 +219,17 @@ private fun BrainiCompleteButton(
     ) {
         TextButton(
             modifier = Modifier.fillMaxSize(),
-            onClick = onClick,
-            enabled = viewModel.isFilled
+            onClick = {
+                navController.navigate(route = Screen.MemoTypeSelect.route)
+            },
+//            enabled = viewModel.isFilled
         ) {
-            Text(text = "완료")
+            Text(
+                text = "완료",
+                color = Color.Black,
+                fontSize = 14.sp,
+                fontWeight = FontWeight.SemiBold
+            )
         }
     }
 }
@@ -254,7 +265,7 @@ private fun RoomName(
         BasicTextField(
             value = text.value,
             onValueChange = { newText ->
-                
+
                 text.value = newText
             },
             singleLine = true)
@@ -291,28 +302,20 @@ private fun Number(
     Spacer(modifier = Modifier.height(4))
 }
 
-//@Composable
-//private fun Date(){
-//    Row(){
-//        Text(
-//            text = "시작 날짜",
-//            color = Color.Black,
-//            fontSize = 16.sp,
-//            fontWeight = FontWeight.SemiBold
-//        )
-//        Spacer(modifier = Modifier.width(66))
-//    }
-//
-//    BrainiDragButton()
-//
-//    Spacer(modifier = Modifier.height(4))
-//}
-
+@OptIn(ExperimentalMaterialApi::class)
 @Composable
 private fun Date(
-    roomCreateViewMode: IRoomCreateViewModel
-) {
-    var text = roomCreateViewMode.roomDate
+    viewModel: IRoomCreateViewModel,
+    sheetState: ModalBottomSheetState
+){
+    val year = viewModel.year
+    val month = viewModel.month
+    val day = viewModel.day
+    val coroutineScope = rememberCoroutineScope()
+    var yearString = " 년   "
+    var monthString = " 월   "
+    var dayString = "일 "
+
     Row(){
         Text(
             text = "시작 날짜",
@@ -321,20 +324,64 @@ private fun Date(
             fontWeight = FontWeight.SemiBold
         )
         Spacer(modifier = Modifier.width(66))
+    }
 
-    }
-    BrainiTextButton{
-        BasicTextField(
-            value = text.value.toString(),
-            onValueChange = { newText ->
-                text.value = newText.toInt()
-            },
-            singleLine = true,
-            textStyle = TextStyle(textAlign = TextAlign.Center)
-        )
-    }
+    BrainiDragButton(
+        content = {
+            BasicTextField(
+                value = year.value.toString() + yearString + month.value.toString() + monthString + day.value.toString() + dayString,
+                onValueChange = { newText ->
+                    year.value = newText.toInt()
+                    month.value = newText.toInt()
+                    day.value = newText.toInt()
+                },
+                readOnly = true,
+                singleLine = true,
+                textStyle = TextStyle(textAlign = TextAlign.Center)
+            )
+
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clickable {
+                        coroutineScope.launch {
+                            sheetState.show()
+                        }
+                    },
+            ) {}
+        }
+    )
+
     Spacer(modifier = Modifier.height(4))
 }
+
+//@Composable
+//private fun Date(
+//    roomCreateViewMode: IRoomCreateViewModel
+//) {
+//    var text = roomCreateViewMode.roomDate
+//    Row(){
+//        Text(
+//            text = "시작 날짜",
+//            color = Color.Black,
+//            fontSize = 16.sp,
+//            fontWeight = FontWeight.SemiBold
+//        )
+//        Spacer(modifier = Modifier.width(66))
+//
+//    }
+//    BrainiTextButton{
+//        BasicTextField(
+//            value = text.value.toString(),
+//            onValueChange = { newText ->
+//                text.value = newText.toInt()
+//            },
+//            singleLine = true,
+//            textStyle = TextStyle(textAlign = TextAlign.Center)
+//        )
+//    }
+//    Spacer(modifier = Modifier.height(4))
+//}
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
@@ -453,8 +500,7 @@ private fun TimePickerBottomSheet(
                 .height(70)
                 .background(Color.White),
             contentAlignment = Alignment.Center){
-                var pickerValue by remember { mutableStateOf<Hours>(AMPMHours(9, 12, AMPMHours.DayTime.PM ))
-                }
+                var pickerValue by remember { mutableStateOf<Hours>(AMPMHours(9, 12, AMPMHours.DayTime.PM )) }
                 HoursNumberPicker(
                     dividersColor = Color.Transparent,
                     value = pickerValue,
@@ -489,10 +535,67 @@ private fun TimePickerBottomSheet(
     )
 }
 
+@OptIn(ExperimentalMaterialApi::class)
+@Composable
+private fun datePickerBottomSheet(
+    viewModel: IRoomCreateViewModel,
+    sheetState: ModalBottomSheetState,
+    content: @Composable () -> Unit
+){
+    ModalBottomSheetLayout(
+        sheetContent = {
+            Box(modifier = Modifier
+                .width(90)
+                .height(70)
+                .background(Color.White),
+                contentAlignment = Alignment.Center){
+                var datePickerValue by remember {mutableStateOf<Fulldate>(Fulldate(2022,8,25))}
+                datePicker(
+                    dividersColor = Color.Transparent,
+                    value = datePickerValue ,
+                    onValueChange = { date ->
+                        datePickerValue = date
+                        viewModel.year.value = date.year
+                        viewModel.month.value = date.month
+                        viewModel.day.value = date.day
+                    },
+                    yearDivider = {
+                        Text(
+                            modifier = Modifier.padding(horizontal = 8.dp),
+                            textAlign = TextAlign.Center,
+                            text = "년"
+                        )
+                    },
+                    monthDivider = {
+                        Text(
+                            modifier = Modifier.padding(horizontal = 8.dp),
+                            textAlign = TextAlign.Center,
+                            text = "월"
+                        )
+                    },
+                    dayDivider = {
+                        Text(
+                            modifier = Modifier.padding(horizontal = 8.dp),
+                            textAlign = TextAlign.Center,
+                            text = "일"
+                        )
+                    }
+                )
+            }
+        },
+        sheetState = sheetState,
+        sheetBackgroundColor = Color.White,
+        sheetShape = RoundedCornerShape(topEnd = 30.dp, topStart = 30.dp),
+        content = content
+    )
+}
+
+
 
 @Preview(showSystemUi = true)
 @Composable
 private fun RoomCreateScreenPreview() {
     LayoutPracticeTheme() {}
-    RoomCreateScreen()
+    val navController = rememberNavController()
+    RoomCreateScreen(navController = navController)
 }

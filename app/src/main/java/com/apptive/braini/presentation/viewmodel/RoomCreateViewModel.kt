@@ -11,13 +11,13 @@ import com.chargemap.compose.numberpicker.AMPMHours
 class RoomCreateViewModel : ViewModel(),
     IRoomCreateViewModel {
     override var roomTitle: MutableState<String> = mutableStateOf(PROJECT_DEFAULT)
-    override var roomNumber: MutableState<Int> = mutableStateOf(1)
+    override var roomNumber: MutableState<Int> = mutableStateOf(0)
     override var roomDate: MutableState<Int> = mutableStateOf(20220622)
     override var callable: MutableState<Side> = mutableStateOf(Side.LEFT)
     override var isPublic: MutableState<Side> = mutableStateOf(Side.RIGHT)
-    override var year: MutableState<Int> = mutableStateOf(2002)
-    override var month: MutableState<Int> = mutableStateOf(6)
-    override var day: MutableState<Int> = mutableStateOf(22)
+    override var year: MutableState<Int> = mutableStateOf(0)
+    override var month: MutableState<Int> = mutableStateOf(0)
+    override var day: MutableState<Int> = mutableStateOf(0)
     override var hour: MutableState<Int> = mutableStateOf(0)
     override var minute: MutableState<Int> = mutableStateOf(0)
     override var AMPM: MutableState<AMPMHours.DayTime> = mutableStateOf(AMPMHours.DayTime.AM)

@@ -28,7 +28,8 @@ fun MemoTypeSelectScreen(){
     BasicContent {
         SelectBox()
     }
-}
+    }
+
 
 @Composable
 private fun BasicContent(
@@ -38,6 +39,7 @@ private fun BasicContent(
         modifier = Modifier
             .fillMaxSize()
             .width(76)
+            .height(38)
             .wrapContentSize(Alignment.Center),
 //            .verticalScroll(rememberScrollState()),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -53,13 +55,14 @@ private fun SelectBox(){
     ){
         Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight()
+                .width(76)
+                .height(42)
                 .background(
                     color = Color(221, 229, 255)
 //                    color = Color(185,204,255,100)
                 )
-                .padding(horizontal = 10.dp, vertical = 20.dp),
+                .padding(horizontal = 10.dp, vertical = 20.dp)
+                .wrapContentSize(Alignment.Center),
             horizontalAlignment = Alignment.CenterHorizontally
         ){
             MemoTypeContent()
@@ -69,22 +72,25 @@ private fun SelectBox(){
 
 @Composable
 private fun MemoTypeContent(){
-    Text(
-        text = "< 가이드라인 필요하신가요?",
-        color = Color.Black,
-        fontWeight = FontWeight.Medium,
-        fontSize = 16.sp
-    )
-    Spacer(modifier = Modifier.height(23.dp))
+    Row(){
+        Text(
+            text = "< 가이드라인 필요하신가요?",
+            color = Color.Black,
+            fontWeight = FontWeight.Medium,
+            fontSize = 16.sp
+        )
+        Spacer(modifier = Modifier.width(14))
+    }
+    Spacer(modifier = Modifier.height(3))
     Row {
         Tree()
-        Spacer(modifier = Modifier.width(20.dp))
+        Spacer(modifier = Modifier.width(5))
         mindmap()
     }
-    Spacer(modifier = Modifier.height(20.dp))
+    Spacer(modifier = Modifier.height(2))
     Row {
         column()
-        Spacer(modifier = Modifier.width(17.dp))
+        Spacer(modifier = Modifier.width(4))
         nothing()
     }
 
@@ -98,11 +104,11 @@ private fun BasicBox(
 ) {
     Box(
         modifier = Modifier
-            .width(140.dp)
-            .height(100.dp)
-            .clip(RoundedCornerShape(20))
+            .width(30)
+            .height(10)
+            .clip(RoundedCornerShape(10))
             .background(Color.White)
-            .clickable { onClick() },
+            .clickable { onClick()},
         content = content,
         contentAlignment = Alignment.Center
     )
@@ -116,12 +122,12 @@ private fun Tree(){
             Image(
                 painter = painterResource(id = R.drawable.guideline_tree),
                 contentDescription = null,
-                modifier = Modifier.size(125.dp)
+                modifier = Modifier.size(100.dp)
             )
         }
-        Spacer(modifier = Modifier.height(3.dp))
+        Spacer(modifier = Modifier.height(1))
         Row(){
-            Spacer(modifier = Modifier.width(50.dp))
+            Spacer(modifier = Modifier.width(13))
             Text(
                 text = "트리",
                 color = Color.Black,
@@ -139,12 +145,12 @@ private fun mindmap(){
             Image(
                 painter = painterResource(id = R.drawable.guideline_mindmap),
                 contentDescription = null,
-                modifier = Modifier.size(120.dp)
+                modifier = Modifier.size(100.dp)
             )
         }
-        Spacer(modifier = Modifier.height(3.dp))
+        Spacer(modifier = Modifier.height(1))
         Row(){
-            Spacer(modifier = Modifier.width(50.dp))
+            Spacer(modifier = Modifier.width(10))
             Text(
                 text = "마인드맵",
                 color = Color.Black,
@@ -162,12 +168,12 @@ private fun column(){
             Image(
                 painter = painterResource(id = R.drawable.guideline_column),
                 contentDescription = null,
-                modifier = Modifier.size(125.dp)
+                modifier = Modifier.size(100.dp)
             )
         }
-        Spacer(modifier = Modifier.height(3.dp))
+        Spacer(modifier = Modifier.height(1))
         Row(){
-            Spacer(modifier = Modifier.width(50.dp))
+            Spacer(modifier = Modifier.width(10))
             Text(
                 text = "세로 나열",
                 color = Color.Black,
@@ -185,12 +191,12 @@ private fun nothing(){
             Image(
                 painter = painterResource(id = R.drawable.guideline_nothing),
                 contentDescription = null,
-                modifier = Modifier.size(125.dp)
+                modifier = Modifier.size(100.dp)
             )
         }
-        Spacer(modifier = Modifier.height(3.dp))
+        Spacer(modifier = Modifier.height(1))
         Row(){
-            Spacer(modifier = Modifier.width(50.dp))
+            Spacer(modifier = Modifier.width(10))
             Text(
                 text = "필요없음",
                 color = Color.Black,

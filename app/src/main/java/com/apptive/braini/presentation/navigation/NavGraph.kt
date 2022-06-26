@@ -2,13 +2,11 @@ package com.apptive.braini.presentation.navigation
 
 import androidx.compose.runtime.Composable
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.apptive.braini.presentation.view.LoginScreen
-import com.apptive.braini.presentation.view.RoomCreateScreen
-import com.apptive.braini.presentation.view.MainScreen
-import com.apptive.braini.presentation.view.SplashScreen
+import com.apptive.braini.presentation.view.*
 import com.apptive.braini.presentation.viewmodel.LoginViewModel
 import com.apptive.braini.presentation.viewmodel.RoomCreateViewModel
 
@@ -16,7 +14,7 @@ import com.apptive.braini.presentation.viewmodel.RoomCreateViewModel
 fun SetupNavGraph(navController: NavHostController){
     NavHost(
         navController =navController ,
-        startDestination = Screen.Splash.route
+        startDestination = Screen.Main.route
     ){
         composable(route = Screen.Splash.route) {
             val viewModel = hiltViewModel<LoginViewModel>()
@@ -26,12 +24,20 @@ fun SetupNavGraph(navController: NavHostController){
             val viewModel = hiltViewModel<LoginViewModel>()
             LoginScreen(viewModel, navController)
         }
+        composable(route = Screen.Main.route) {
+            MainScreen(navController)
+        }
         composable(route = Screen.RoomCreate.route) {
             val viewModel = hiltViewModel<RoomCreateViewModel>()
-            RoomCreateScreen(viewModel)
+            RoomCreateScreen(viewModel,navController)
         }
-        composable(route = Screen.Main.route) {
-            MainScreen()
+        composable(route = Screen.MemoTypeSelect.route) {
+            val viewModel = hiltViewModel<RoomCreateViewModel>()
+            RoomCreateScreen(viewModel,navController)
         }
+        composable(route = Screen.RoomCreateSucceed.route) {
+            RoomCreateSucceedScreen(navController)
+        }
+
     }
 }

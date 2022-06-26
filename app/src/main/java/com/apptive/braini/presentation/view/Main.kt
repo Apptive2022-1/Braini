@@ -1,5 +1,6 @@
 package com.apptive.braini.presentation.view
 
+import android.content.Context
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -16,15 +17,22 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.apptive.braini.presentation.height
+import com.apptive.braini.presentation.navigation.Screen
+import com.apptive.braini.presentation.width
 import com.apptive.braini.ui.theme.LayoutPracticeTheme
 
 
 @Composable
-fun MainScreen() {
+fun MainScreen(
+    navController: NavController
+) {
     MainContent {
         Logo()
         GuideSentense()
-        CreateBox()
+        CreateBox(navController)
         PastRecord()
     }
 }
@@ -35,7 +43,8 @@ private fun MainContent(
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(horizontal = 25.dp, vertical = 45.dp)
+            .width(87)
+            .height(92)
             .wrapContentSize(Alignment.Center),
         horizontalAlignment = Alignment.CenterHorizontally,
         content = content
@@ -49,66 +58,70 @@ private fun Logo(){
         fontSize = 20.sp,
         fontWeight = FontWeight.Bold
     )
-    Spacer(modifier = Modifier.height(38.dp))
+    Spacer(modifier = Modifier.height(5))
 }
 
 @Composable
 private fun GuideSentense(
     modifier: Modifier = Modifier
 ){
-    Text(
-        modifier = modifier.fillMaxWidth(),
-        text = "팀 프로젝트에 참여하세요 :)",
-        fontSize = 16.sp,
-        fontWeight = FontWeight.SemiBold
-    )
-    Spacer(modifier = Modifier.height(5.dp))
-    Text(
-        modifier = modifier.fillMaxWidth(),
-        text = "방을 만들어보세요",
-        fontSize = 14.sp,
-        fontWeight = FontWeight.Medium
-    )
-    Spacer(modifier = Modifier.height(16.dp))
+    Row(){
+        Spacer(modifier = Modifier.width(6))
+        Text(
+            modifier = modifier.fillMaxWidth(),
+            text = "팀 프로젝트에 참여하세요 :)",
+            fontSize = 16.sp,
+            fontWeight = FontWeight.SemiBold
+        )
+    }
+    Spacer(modifier = Modifier.height(1))
+    Row(){
+        Spacer(modifier = Modifier.width(6))
+        Text(
+            modifier = modifier.fillMaxWidth(),
+            text = "방을 만들어보세요",
+            fontSize = 14.sp,
+            fontWeight = FontWeight.Medium
+        )
+    }
+    Spacer(modifier = Modifier.height(2))
 }
 
 @Composable
-private fun CreateBox(){
+private fun CreateBox(
+    navController: NavController
+){
     Surface(
         shape = RoundedCornerShape(20),
         elevation = 10.dp
     ) {
         Column(
             modifier = Modifier
-                .fillMaxWidth()
-                .width(339.dp)
-                .height(224.dp)
+                .width(88)
+                .height(22)
                 .background(
-                    brush = Brush.verticalGradient(
-                        listOf(
-                            Color(223, 227, 255),
-                            Color(237, 236, 255)
-                        )
-                    )
+                    color = Color(221, 229, 255)
                 )
                 .padding(top = 15.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ){
             CodeBox()
+            Spacer(modifier = Modifier.height(5))
+            NewBox(navController)
         }
     }
-    Spacer(modifier = Modifier.height(92.dp))
+    Spacer(modifier = Modifier.height(12))
 }
 
 @Composable
 private fun CodeBox(){
     Box(
         modifier = Modifier
-            .width(285.dp)
-            .height(35.dp)
+            .width(77)
+            .height(4)
             .clip(RoundedCornerShape(20))
             .background(Color.White)
-            .padding( start = 15.dp, end = 10.dp)
+            .padding(start = 15.dp, end = 10.dp)
     ){
         Row(
             modifier = Modifier.fillMaxSize(),
@@ -123,11 +136,11 @@ private fun CodeBox(){
             Spacer(modifier = Modifier.weight(1f))
             Box(
                 modifier = Modifier
-                    .width(45.dp)
-                    .height(24.dp)
+                    .width(12)
+                    .height(3)
                     .clip(RoundedCornerShape(30))
                     .background(color = Color(red = 198, green = 204, blue = 255))
-                    .clickable {  },
+                    .clickable { },
                 contentAlignment = Alignment.Center){
                 Text(
                     text = "완료",
@@ -141,28 +154,70 @@ private fun CodeBox(){
 }
 
 @Composable
+private fun NewBox(
+    navController: NavController
+) {
+    Column(){
+        Text(
+            text = "코드가 없다면 방을 새로 만들어보세요",
+            color = Color.Black,
+            fontWeight = FontWeight.Medium,
+            fontSize = 11.sp
+        )
+        Spacer(modifier = Modifier.height(1))
+        Box(
+            modifier = Modifier
+                .width(77)
+                .height(5)
+                .clip(RoundedCornerShape(20))
+                .background(Color.White)
+                .clickable {
+                    navController.navigate(route = Screen.RoomCreate.route)
+                }
+        ){
+            Column(){
+                Spacer(modifier = Modifier.height(1))
+                Row(){
+                    Spacer(modifier = Modifier.width(30))
+                    Text(
+                        text = "Click here!",
+                        color = Color.Black,
+                        fontWeight = FontWeight.Medium,
+                        fontSize = 13.sp
+                    )
+                }
+            }
+        }
+    }
+}
+
+
+    @Composable
 private fun PastRecord(){
-    Text(
-        modifier = Modifier.fillMaxWidth(),
-        text = "과거 브레인스토밍",
-        fontSize = 16.sp,
-        fontWeight = FontWeight.SemiBold
-    )
-    Spacer(modifier = Modifier.height(8.dp))
+    Row(){
+        Spacer(modifier = Modifier.width(6))
+        Text(
+            modifier = Modifier.fillMaxWidth(),
+            text = "과거 브레인스토밍",
+            fontSize = 16.sp,
+            fontWeight = FontWeight.SemiBold
+        )
+    }
+    Spacer(modifier = Modifier.height(1))
     Column{
         Row {
             PastRecordBox()
-            Spacer(modifier = Modifier.width(13.dp))
+            Spacer(modifier = Modifier.width(4))
             PastRecordBox()
-            Spacer(modifier = Modifier.width(13.dp))
+            Spacer(modifier = Modifier.width(4))
             PastRecordBox()
         }
-        Spacer(modifier = Modifier.height(13.dp))
+        Spacer(modifier = Modifier.height(4))
         Row{
             PastRecordBox()
-            Spacer(modifier = Modifier.width(13.dp))
+            Spacer(modifier = Modifier.width(4))
             PastRecordBox()
-            Spacer(modifier = Modifier.width(13.dp))
+            Spacer(modifier = Modifier.width(4))
             PastRecordBox()
         }
     }
@@ -175,8 +230,8 @@ private fun PastRecordBox(){
         elevation = 10.dp
     ){
         Box(modifier = Modifier
-            .width(100.dp)
-            .height(99.dp)
+            .width(27)
+            .height(13)
             .clip(RoundedCornerShape(20))
             .background(Color.White)
         )
@@ -186,8 +241,7 @@ private fun PastRecordBox(){
 @Preview(showSystemUi = true)
 @Composable
 private fun RoomCreateScreenPreview() {
-    LayoutPracticeTheme() {
-
-    }
-    MainScreen()
+    val navController = rememberNavController()
+    LayoutPracticeTheme() {}
+    MainScreen(navController = navController)
 }

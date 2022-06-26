@@ -16,24 +16,25 @@ import java.time.Year
 import java.time.YearMonth
 import kotlin.math.abs
 
-sealed interface date {
-    val year: Int
-    val month: Int
-    val day: Int
-}
+//sealed interface date {
+//    val year: Int
+//    val month: Int
+//    val day: Int
+//}
 
 data class Fulldate(
-    override val year: Int,
-    override val month: Int,
-    override val day: Int,
-) : date
+    val year: Int,
+    val month: Int,
+    val day: Int,
+)
+
 
 @Composable
 fun datePicker(
     modifier: Modifier = Modifier,
     value: Fulldate,
     leadingZero: Boolean = true,
-    yearRange: Iterable<Int> = (2022..2023),
+    yearRange: Iterable<Int> = (2022..2025),
     monthRange: Iterable<Int> = (1..12),
     dayRange: Iterable<Int> = (1..31),
     yearDivider: (@Composable () -> Unit)? = null,
@@ -50,7 +51,7 @@ fun datePicker(
         NumberPicker(
             modifier = Modifier.weight(1f),
             label = {
-                ""
+                "${if (leadingZero && abs(it) < 10) "0" else ""}$it"
             },
             value = value.year,
             onValueChange = {
@@ -82,7 +83,7 @@ fun datePicker(
         NumberPicker(
             modifier = Modifier.weight(1f),
             label = {
-                ""
+                "${if (leadingZero && abs(it) < 10) "0" else ""}$it"
             },
             value = value.day,
             onValueChange = {

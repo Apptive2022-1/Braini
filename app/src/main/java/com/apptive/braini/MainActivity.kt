@@ -12,6 +12,7 @@ import androidx.navigation.compose.rememberNavController
 import com.apptive.braini.domain.log
 import com.apptive.braini.presentation.navigation.SetupNavGraph
 import com.apptive.braini.presentation.view.Main.MemoTypeSelectScreen
+import com.apptive.braini.presentation.view.MemoCreate
 import com.apptive.braini.presentation.view.RoomCreateScreen
 import com.apptive.braini.presentation.viewmodel.RoomCreateViewModel
 import com.apptive.braini.ui.theme.LayoutPracticeTheme
@@ -25,10 +26,9 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             LayoutPracticeTheme {
-//                val navController = rememberNavController()
-////                SetupNavGraph(navController = navController)
-//                val viewModel = hiltViewModel<RoomCreateViewModel>()
-                MemoTypeSelectScreen()
+                val navController = rememberNavController()
+                SetupNavGraph(navController = navController)
+                val viewModel = hiltViewModel<RoomCreateViewModel>()
             }
         }
     }

@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -24,11 +26,12 @@ fun MemoCreate(){
     Box(modifier = Modifier.fillMaxSize()) {
         var offsetX by remember { mutableStateOf(0f) }
         var offsetY by remember { mutableStateOf(0f) }
+        var text1 by remember { mutableStateOf("")}
 
         Box(
             Modifier
                 .offset { IntOffset(offsetX.roundToInt(), offsetY.roundToInt()) }
-                .background(Color.Cyan)
+                .background(Color.Gray)
                 .size(100.dp)
                 .pointerInput(Unit) {
                     detectDragGestures { change, dragAmount ->
@@ -37,7 +40,11 @@ fun MemoCreate(){
                         offsetY += dragAmount.y
                     }
                 }
-        )
+        ){
+            BasicTextField(
+                value = text1,
+                onValueChange =  {text1 = it})
+        }
     }
 }
 

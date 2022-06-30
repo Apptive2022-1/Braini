@@ -3,6 +3,7 @@ package com.apptive.braini.presentation.viewmodel
 import android.content.Context
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -27,6 +28,8 @@ class LoginViewModel @Inject constructor(
     private val accountManager: AccountManager,
     private val googleSignIn: GoogleOneTap
 ): ViewModel(), ILoginViewModel {
+    override val accountId: MutableState<String> = mutableStateOf("")
+    override val accountPw: MutableState<String> = mutableStateOf("")
     private val _account = mutableStateOf(accountManager.currentAccount)
     val account: State<Account> get() = _account
 

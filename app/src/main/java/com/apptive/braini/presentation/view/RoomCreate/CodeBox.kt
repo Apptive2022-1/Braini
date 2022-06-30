@@ -16,9 +16,12 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
+import com.apptive.braini.presentation.navigation.Screen
 
 @Composable
-fun ColumnScope.CreateBox(){
+fun ColumnScope.CreateBox(navController: NavController){
     Surface(
         shape = RoundedCornerShape(20),
         elevation = 10.dp
@@ -36,7 +39,10 @@ fun ColumnScope.CreateBox(){
                         )
                     )
                 )
-                .padding(top = 15.dp),
+                .padding(top = 15.dp)
+                .clickable {
+                    navController.navigate(Screen.RoomCreate.route)
+                },
             horizontalAlignment = Alignment.CenterHorizontally
         ){
             CodeBox()
@@ -89,6 +95,6 @@ private fun CodeBox(){
 @Composable
 private fun CodeBoxPreview() {
     Column {
-        CreateBox()
+        CreateBox(rememberNavController())
     }
 }
